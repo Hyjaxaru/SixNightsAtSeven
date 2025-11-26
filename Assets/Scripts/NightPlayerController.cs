@@ -1,21 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.InputSystem;
-using Debug = UnityEngine.Debug;
+using UnityEngine.Serialization;
 
 public class NightPlayerController : MonoBehaviour
 {
     // --- Public --- //
     
-    // desk position
-    [Header("Positions")]
-    public List<Transform> officeCameraPositions;
+    // the transforms of each position for the camera to move to
+    [Header("The Office")]
+    public List<Transform> officeCameraTransforms;
     
     // the player's current position in the office
     [Range(0, 2)] public int currentOfficeIndex = 1;
+    
+    // The speed that the player moves in the office
+    [Range(0, 1)] public float officeMoveDuration = 0.5f;
     
     // the speed that the player moves between positions
 
@@ -24,7 +25,7 @@ public class NightPlayerController : MonoBehaviour
         float elapsed = 0.0f;
         while (elapsed < duration)
         {
-            transform.position = Vector3.Lerp(origin, target, elapsed / duration);
+            transform.position = Vector3.Lerp(origin, target, Mathf.SmoothStep(0.0f, 1.0f, elapsed / duration));
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -36,28 +37,13 @@ public class NightPlayerController : MonoBehaviour
         float elapsed = 0.0f;
         while (elapsed < duration)
         {
-            transform.rotation = Quaternion.Lerp(origin, target, elapsed / duration);
+            transform.rotation = Quaternion.Lerp(origin, target, Mathf.SmoothStep(0.0f, 1.0f, elapsed / duration));
+            
             elapsed += Time.deltaTime;
             yield return null;
         }
         transform.rotation = target;
-    }
-
-    private int WrapCameraIncrement(int cameraIndex, int min, int max)
-    {
-        if (cameraIndex + 1 > max)
-            return min;
-        else
-            return cameraIndex + 1;
-    }
-
-    private int WrapCameraDecrement(int cameraIndex, int min, int max)
-    {
-        if (cameraIndex - 1 < min)
-            return max;
-        else
-            return cameraIndex - 1;
-    }
+    } 
     
     void Start()
     {
@@ -75,10 +61,10 @@ public class NightPlayerController : MonoBehaviour
         if (value != Vector2.zero)
         {
             var xInt = Mathf.CeilToInt(value.x);
-            currentOfficeIndex = Mathf.Clamp(currentOfficeIndex + xInt, 0, officeCameraPositions.Count - 1);
+            currentOfficeIndex = Mathf.Clamp(currentOfficeIndex + xInt, 0, officeCameraTransforms.Count - 1);
             
-            StartCoroutine(MoveCameraPosition(transform.position, officeCameraPositions[currentOfficeIndex].position, 0.1f));
-            StartCoroutine(MoveCameraRotation(transform.rotation, officeCameraPositions[currentOfficeIndex].rotation, 0.1f));
+            StartCoroutine(MoveCameraPosition(transform.position, officeCameraTransforms[currentOfficeIndex].position, officeMoveDuration));
+            StartCoroutine(MoveCameraRotation(transform.rotation, officeCameraTransforms[currentOfficeIndex].rotation, officeMoveDuration));
         }
     }
 }
