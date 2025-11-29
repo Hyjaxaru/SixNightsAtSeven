@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class NightPlayerController : MonoBehaviour
 {
@@ -17,27 +16,35 @@ public class NightPlayerController : MonoBehaviour
     
     // The speed that the player moves in the office
     [Range(0, 1)] public float officeMoveDuration = 0.5f;
-    
-    // the speed that the player moves between positions
 
-    private IEnumerator MoveCameraPosition(Vector3 origin, Vector3 target, float duration)
+    private IEnumerator MoveOfficeCameraPosition()
     {
+        // get the start and end position of the movement
+        Vector3 origin = transform.position;
+        Vector3 target = officeCameraTransforms[currentOfficeIndex].position;
+        
+        // begin moving te camera
         float elapsed = 0.0f;
-        while (elapsed < duration)
+        while (elapsed < officeMoveDuration)
         {
-            transform.position = Vector3.Lerp(origin, target, Mathf.SmoothStep(0.0f, 1.0f, elapsed / duration));
+            transform.position = Vector3.Lerp(origin, target, Mathf.SmoothStep(0.0f, 1.0f, elapsed / officeMoveDuration));
             elapsed += Time.deltaTime;
             yield return null;
         }
         transform.position = target;
     }
 
-    private IEnumerator MoveCameraRotation(Quaternion origin, Quaternion target, float duration)
+    private IEnumerator MoveOfficeCameraRotation()
     {
+        // get the start and end rotation of the camera
+        Quaternion origin = transform.rotation;
+        Quaternion target = officeCameraTransforms[currentOfficeIndex].rotation;
+        
+        // start rotating the camera
         float elapsed = 0.0f;
-        while (elapsed < duration)
+        while (elapsed < officeMoveDuration)
         {
-            transform.rotation = Quaternion.Lerp(origin, target, Mathf.SmoothStep(0.0f, 1.0f, elapsed / duration));
+            transform.rotation = Quaternion.Lerp(origin, target, Mathf.SmoothStep(0.0f, 1.0f, elapsed / officeMoveDuration));
             
             elapsed += Time.deltaTime;
             yield return null;
@@ -63,8 +70,8 @@ public class NightPlayerController : MonoBehaviour
             var xInt = Mathf.CeilToInt(value.x);
             currentOfficeIndex = Mathf.Clamp(currentOfficeIndex + xInt, 0, officeCameraTransforms.Count - 1);
             
-            StartCoroutine(MoveCameraPosition(transform.position, officeCameraTransforms[currentOfficeIndex].position, officeMoveDuration));
-            StartCoroutine(MoveCameraRotation(transform.rotation, officeCameraTransforms[currentOfficeIndex].rotation, officeMoveDuration));
+            StartCoroutine(MoveOfficeCameraPosition());
+            StartCoroutine(MoveOfficeCameraRotation());
         }
     }
 }
