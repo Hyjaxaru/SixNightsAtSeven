@@ -17,7 +17,7 @@ public class NightPlayerController : MonoBehaviour
     // The speed that the player moves in the office
     [Range(0, 1)] public float officeMoveDuration = 0.5f;
     
-    
+    // the flashlight
     [Header("Flashlight")]
     public Light flashlight;
 
