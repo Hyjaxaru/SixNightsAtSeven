@@ -7,7 +7,7 @@ public class NightPlayerController : MonoBehaviour
 {
     // --- Public --- //
     
-    // the transforms of each position for the camera to move to
+    // the transforms of each position for the office camera to move to
     [Header("The Office")]
     public List<Transform> officeCameraTransforms;
     
@@ -16,6 +16,10 @@ public class NightPlayerController : MonoBehaviour
     
     // The speed that the player moves in the office
     [Range(0, 1)] public float officeMoveDuration = 0.5f;
+    
+    
+    [Header("Flashlight")]
+    public Light flashlight;
 
     private IEnumerator MoveOfficeCameraPosition()
     {
@@ -51,16 +55,6 @@ public class NightPlayerController : MonoBehaviour
         }
         transform.rotation = target;
     } 
-    
-    void Start()
-    {
-        
-    }
-
-    
-    void Update()
-    {
-    }
 
     void OnMove(InputValue inputValue)
     {
@@ -73,5 +67,10 @@ public class NightPlayerController : MonoBehaviour
             StartCoroutine(MoveOfficeCameraPosition());
             StartCoroutine(MoveOfficeCameraRotation());
         }
+    }
+
+    void OnFlash(InputValue inputValue)
+    {
+        flashlight.enabled = !flashlight.enabled;
     }
 }

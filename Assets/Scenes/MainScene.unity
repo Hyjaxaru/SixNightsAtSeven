@@ -899,7 +899,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 304292637}
   m_Enabled: 1
-  m_CastShadows: 2
+  m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -3163,7 +3163,7 @@ GameObject:
   - component: {fileID: 1233229783}
   - component: {fileID: 1233229782}
   m_Layer: 0
-  m_Name: Spot Light
+  m_Name: Flashlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3301,8 +3301,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1253372347}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7933535, z: -0, w: 0.6087613}
-  m_LocalPosition: {x: 1.2375654, y: 0.6, z: -0.17761268}
+  m_LocalRotation: {x: -0, y: 0.72572726, z: -0, w: 0.6879825}
+  m_LocalPosition: {x: 1.168, y: 0.6, z: -0.214}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5020,7 +5020,7 @@ GameObject:
   - component: {fileID: 1887639341}
   m_Layer: 0
   m_Name: NightPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5043,6 +5043,9 @@ MonoBehaviour:
   - {fileID: 1253372348}
   currentOfficeIndex: 1
   officeMoveDuration: 0.5
+  flashlight: {fileID: 1233229783}
+  flashlightIntensity: 0.85
+  flashlightState: 0
 --- !u!4 &1887639342
 Transform:
   m_ObjectHideFlags: 0
