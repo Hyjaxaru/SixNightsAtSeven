@@ -1,0 +1,22 @@
+:root {
+}
+
+.cameraButton {
+    border-top-width: 4px;
+    border-right-width: 4px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+    border-top-left-radius: -156px;
+    border-top-right-radius: -156px;
+    border-bottom-right-radius: -156px;
+    border-bottom-left-radius: -156px;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    background-color: rgb(32, 32, 32);
+    color: rgb(255, 255, 255);
+    -unity-text-outline-color: rgb(56, 56, 56);
+    -unity-font-definition: url("project://database/Assets/UI/Monocraft-nerd-fonts-patched.ttc?fileID=12800000&guid=d89001161e95b4d7cb121d795bc4bfd9&type=3#Monocraft-nerd-fonts-patched");
+    font-size: 20px;
+}
