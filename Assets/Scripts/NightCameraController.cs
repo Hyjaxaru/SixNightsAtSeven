@@ -24,7 +24,7 @@ public class NightCameraController : MonoBehaviour
     [Header("CamSys Settings")]
     public List<Transform> cameraTransforms;
 
-    public float cameraIndex;
+    public int cameraIndex;
     
     // --- private --- //
 
@@ -33,7 +33,7 @@ public class NightCameraController : MonoBehaviour
     
     // --- functions --- //
     
-    private IEnumerator ToggleCameras(bool newState)
+    private IEnumerator AnimateCameraMonitor(bool newState)
     {
         _animationLock = true;
         
@@ -62,6 +62,24 @@ public class NightCameraController : MonoBehaviour
         isCameraOpen = newState;
         _animationLock = false;
     }
+
+    private void ToggleCameras()
+    {
+        var newCamState = !isCameraOpen;
+        
+        // if the cameras are already open, we want to close the UI immediately
+        if  (isCameraOpen)
+            isCameraOpen = newCamState;
+        
+        StartCoroutine(AnimateCameraMonitor(newCamState));
+    }
+
+    private int LoopInt(int value, int min, int max)
+    {
+        if (value < min) return max;
+        if (value > max) return min;
+        return value;
+    }
     
     
     // --- events --- //
@@ -69,16 +87,15 @@ public class NightCameraController : MonoBehaviour
     void OnViewCameras(InputValue _)
     {
         if (_animationLock) return;
-        
-        StartCoroutine(ToggleCameras(!isCameraOpen));
+        ToggleCameras();
     }
 
-    void OnChangeCanera(InputValue inputValue)
+    void OnChangeCamera(InputValue inputValue)
     {
-        var value = inputValue.Get<float>();
-        if (Mathf.Approximately(value, 0f)) return;
+        var value = Mathf.CeilToInt(inputValue.Get<float>());
+        if (value == 0) return;
         
-        var toAdd = Mathf.CeilToInt(value);
-        cameraIndex = Mathf.Clamp(cameraIndex + toAdd, 0, cameraTransforms.Count - 1);
+        //cameraIndex = Mathf.Clamp(cameraIndex + value, 0, cameraTransforms.Count - 1);
+        cameraIndex = LoopInt(cameraIndex + value, 0, cameraTransforms.Count - 1);
     }
 }
