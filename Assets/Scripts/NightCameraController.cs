@@ -1,6 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,28 +8,41 @@ public class NightCameraController : MonoBehaviour
 {
     // --- public --- //
     
+    // whether cameras are allowed or not (used by NightPlayerController)
+    public bool camerasEnabled;
+    
+    [Header("Camera Monitor")]
     public GameObject monitorObject;
     
     // the up and down transforms for the monitor to move between
     public Transform transformEnabled;
     public Transform transformDisabled;
     
-    // the state of the camera being up or down
-    public bool isCameraOpen;
-    
     // the speed at which the camera's open
     [Range(0, 1)] public float toggleDuration = 0.5f;
     
     // camera system positions
     [Header("CamSys Settings")]
+    public GameObject camSysCamera;
+    
+    // all the transforms for camera positions
     public List<Transform> cameraTransforms;
-
+    
+    // the current index in the camera position transform list
     public int cameraIndex;
+    
+    public TextMeshPro cameraIndexText;
+
+    public bool CameraState
+    {
+        get => _camSysCameraComp.enabled;
+        set => _camSysCameraComp.enabled = value;
+    }
     
     // --- private --- //
 
     private bool _animationLock;
-    
+    private Camera _camSysCameraComp;
     
     // --- functions --- //
     
@@ -38,7 +51,7 @@ public class NightCameraController : MonoBehaviour
         _animationLock = true;
         
         // if the desired state is the same as the current, do nothing
-        if (newState == isCameraOpen) yield break;
+        if (newState == CameraState) yield break;
         
         var positionOrigin = monitorObject.transform.position;
         var rotationOrigin = monitorObject.transform.rotation;
@@ -59,19 +72,8 @@ public class NightCameraController : MonoBehaviour
             yield return null;
         }
         
-        isCameraOpen = newState;
+        CameraState = newState;
         _animationLock = false;
-    }
-
-    private void ToggleCameras()
-    {
-        var newCamState = !isCameraOpen;
-        
-        // if the cameras are already open, we want to close the UI immediately
-        if  (isCameraOpen)
-            isCameraOpen = newCamState;
-        
-        StartCoroutine(AnimateCameraMonitor(newCamState));
     }
 
     private int LoopInt(int value, int min, int max)
@@ -80,22 +82,52 @@ public class NightCameraController : MonoBehaviour
         if (value > max) return min;
         return value;
     }
-    
+
+    private void SetCameraTransform(Transform transform)
+    {
+        camSysCamera.transform.position = transform.position;
+        camSysCamera.transform.rotation = transform.rotation;
+    }
+
+    private void SetCameraText()
+    {
+        cameraIndexText.text = "Camera " + (cameraIndex + 1);
+    }
     
     // --- events --- //
+
+    void Start()
+    {
+        _camSysCameraComp = camSysCamera.GetComponent<Camera>();
+
+        _camSysCameraComp.enabled = false;
+        SetCameraTransform(cameraTransforms[0]);
+        SetCameraText();
+    }
     
     void OnViewCameras(InputValue _)
     {
+        if (!camerasEnabled) return;
         if (_animationLock) return;
-        ToggleCameras();
+        
+        StartCoroutine(AnimateCameraMonitor(!CameraState));
+        
+        // if the cameras are already oen, we want to disable them before the animation
+        if (CameraState) CameraState = false;
     }
 
-    void OnChangeCamera(InputValue inputValue)
+    void OnMove(InputValue inputValue)
     {
-        var value = Mathf.CeilToInt(inputValue.Get<float>());
-        if (value == 0) return;
+        if (!CameraState) return; // don't do anything if cams aren't open
+        
+        var value = inputValue.Get<Vector2>();
+        if (value == Vector2.zero) return;
+        var xInt = Mathf.CeilToInt(value.x);
         
         //cameraIndex = Mathf.Clamp(cameraIndex + value, 0, cameraTransforms.Count - 1);
-        cameraIndex = LoopInt(cameraIndex + value, 0, cameraTransforms.Count - 1);
+        cameraIndex = LoopInt(cameraIndex + xInt, 0, cameraTransforms.Count - 1);
+        
+        SetCameraTransform(cameraTransforms[cameraIndex]);
+        SetCameraText();
     }
 }
