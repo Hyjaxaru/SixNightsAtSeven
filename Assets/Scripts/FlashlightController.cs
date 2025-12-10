@@ -3,10 +3,15 @@ using UnityEngine.InputSystem;
 
 public class FlashlightController : MonoBehaviour
 {
-    public Light flashlight;
+    private Light _flashlight;
+
+    void Start()
+    {
+        _flashlight = GetComponent<Light>();
+    }
     
     void OnFlash(InputValue _)
     {
-        flashlight.enabled = !flashlight.enabled;
+        _flashlight.enabled = !_flashlight.enabled;
     }
 }

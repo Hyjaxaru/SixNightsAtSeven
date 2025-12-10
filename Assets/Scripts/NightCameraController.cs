@@ -14,8 +14,6 @@ public class NightCameraController : MonoBehaviour
     public Transform transformEnabled;
     public Transform transformDisabled;
     
-    [Space] // Makes the inspector look nicer
-    
     // the state of the camera being up or down
     public bool isCameraOpen;
     
@@ -24,7 +22,9 @@ public class NightCameraController : MonoBehaviour
     
     // camera system positions
     [Header("CamSys Settings")]
-    public List<Transform> cameraPositions;
+    public List<Transform> cameraTransforms;
+
+    public float cameraIndex;
     
     // --- private --- //
 
@@ -71,5 +71,14 @@ public class NightCameraController : MonoBehaviour
         if (_animationLock) return;
         
         StartCoroutine(ToggleCameras(!isCameraOpen));
+    }
+
+    void OnChangeCanera(InputValue inputValue)
+    {
+        var value = inputValue.Get<float>();
+        if (Mathf.Approximately(value, 0f)) return;
+        
+        var toAdd = Mathf.CeilToInt(value);
+        cameraIndex = Mathf.Clamp(cameraIndex + toAdd, 0, cameraTransforms.Count - 1);
     }
 }
