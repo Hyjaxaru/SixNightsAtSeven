@@ -43,6 +43,7 @@ public class NightCameraController : MonoBehaviour
 
     private bool _animationLock;
     private Camera _camSysCameraComp;
+    private FlashlightController _flashlight;
     
     // --- functions --- //
     
@@ -83,10 +84,10 @@ public class NightCameraController : MonoBehaviour
         return value;
     }
 
-    private void SetCameraTransform(Transform transform)
+    private void SetCameraTransform(Transform t)
     {
-        camSysCamera.transform.position = transform.position;
-        camSysCamera.transform.rotation = transform.rotation;
+        camSysCamera.transform.position = t.position;
+        camSysCamera.transform.rotation = t.rotation;
     }
 
     private void SetCameraText()
@@ -99,6 +100,7 @@ public class NightCameraController : MonoBehaviour
     void Start()
     {
         _camSysCameraComp = camSysCamera.GetComponent<Camera>();
+        _flashlight = GetComponent<FlashlightController>();
 
         _camSysCameraComp.enabled = false;
         SetCameraTransform(cameraTransforms[0]);
@@ -112,8 +114,10 @@ public class NightCameraController : MonoBehaviour
         
         StartCoroutine(AnimateCameraMonitor(!CameraState));
         
-        // if the cameras are already oen, we want to disable them before the animation
+        // if the cameras are already on, we want to disable them before the animation
         if (CameraState) CameraState = false;
+
+        _flashlight.enabled = false;
     }
 
     void OnMove(InputValue inputValue)
