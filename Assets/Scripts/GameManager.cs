@@ -1,7 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // --- public --- //
+    
+    // the animatronics
+    public List<EnemyData> animatronics;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,3 +20,5 @@ public class GameManager : MonoBehaviour
         
     }
 }
+
+
