@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyRoamController : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class EnemyRoamController : MonoBehaviour
 
     private float _timer;
     private int _moveIndex;
+    
+    private NavMeshAgent _navMeshAgent;
 
     // --- functions --- //
 
@@ -62,11 +65,18 @@ public class EnemyRoamController : MonoBehaviour
 
     void Start()
     {
+        // get components
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        
         // update cosmetics
         underglowLight.color = underglowColor;
 
         // move to the first waypoint
         MoveToIndex(0);
+        
+        _navMeshAgent.destination = waypoints[2].position;
+        
+        
     }
 
     // --- editor GUI --- //
