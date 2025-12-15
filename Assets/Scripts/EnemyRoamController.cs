@@ -18,12 +18,7 @@ public class EnemyRoamController : MonoBehaviour
 
     // chance to move to the next waypoint
     [Range(0, 20)] public int moveChance;
-
-    // is the enemy able to move backwards through the list of waypoints
-    public bool moveBackwards;
-
-    // chance to move backwards
-    [Range(0, 1)] public float moveBackwardsChance;
+    [Range(0, 20)] public int moveBackwardsChance;
 
     // --- private --- //
 
@@ -31,6 +26,10 @@ public class EnemyRoamController : MonoBehaviour
     private int _moveIndex;
     
     private NavMeshAgent _navMeshAgent;
+    
+    // --- computed --- //
+    
+    private bool IsAtDoor => _moveIndex >= waypoints.Count;
 
     // --- functions --- //
 
@@ -38,14 +37,14 @@ public class EnemyRoamController : MonoBehaviour
     {
         _moveIndex = index;
 
-        var t = waypoints[_moveIndex];
-        transform.position = t.position;
-        transform.rotation = t.rotation;
+        var pos = waypoints[_moveIndex].position;
+        _navMeshAgent.destination = pos;
     }
 
-    private bool RandomChance(float chance)
+    private bool RandomChance(int chance)
     {
-        return Random.value < chance;
+        var random = Random.Range(0, 20);
+        return random <= chance;
     }
 
     private void MovementOpportunity()
@@ -55,8 +54,10 @@ public class EnemyRoamController : MonoBehaviour
 
         // if we could go backwards, do a check for that now
         var direction = 1;
-        if (moveBackwards)
+        if (!IsAtDoor)
+        {
             direction = RandomChance(moveBackwardsChance) ? -1 : 1;
+        }
 
         MoveToIndex(_moveIndex + direction);
     }
@@ -65,18 +66,9 @@ public class EnemyRoamController : MonoBehaviour
 
     void Start()
     {
-        // get components
         _navMeshAgent = GetComponent<NavMeshAgent>();
         
-        // update cosmetics
         underglowLight.color = underglowColor;
-
-        // move to the first waypoint
-        MoveToIndex(0);
-        
-        _navMeshAgent.destination = waypoints[2].position;
-        
-        
     }
 
     // --- editor GUI --- //
