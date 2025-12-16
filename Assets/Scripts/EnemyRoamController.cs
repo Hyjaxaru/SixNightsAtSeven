@@ -32,14 +32,9 @@ public class EnemyRoamController : MonoBehaviour
     
     // --- computed --- //
     
-<<<<<<< Updated upstream
-    private bool IsAtDoor => _moveIndex >= waypoints.Count;
-
-=======
     private bool IsAtDoor => _moveIndex >= waypoints.Count-1;
+
     
-    
->>>>>>> Stashed changes
     // --- functions --- //
 
     private void MoveToIndex(int index)
@@ -59,11 +54,7 @@ public class EnemyRoamController : MonoBehaviour
     private bool RandomChance(int chance)
     {
         var random = Random.Range(0, 20);
-<<<<<<< Updated upstream
         return random <= chance;
-=======
-        return random < chance;
->>>>>>> Stashed changes
     }
 
     private void MovementOpportunity()
@@ -75,11 +66,6 @@ public class EnemyRoamController : MonoBehaviour
         var direction = 1;
         if (!IsAtDoor)
             direction = RandomChance(moveBackwardsChance) ? -1 : 1;
-<<<<<<< Updated upstream
-        }
-
-        MoveToIndex(_moveIndex + direction);
-=======
         _moveIndex = Mathf.Clamp(_moveIndex + direction, 0, waypoints.Count - 1);
 
         // force move to door if we should
@@ -89,8 +75,9 @@ public class EnemyRoamController : MonoBehaviour
             ForceTransform(waypoints[_moveIndex]);
         else
             MoveToIndex(_moveIndex);
->>>>>>> Stashed changes
     }
+    
+    
 
     
     // --- events --- //
