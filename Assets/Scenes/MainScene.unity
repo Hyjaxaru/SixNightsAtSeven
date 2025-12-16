@@ -2101,8 +2101,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d89a1dbc2bda489a9e0918333d4d381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animatronics: []
-  movementInterval: 1
+  animatronics:
+  - {fileID: 2032943887}
+  movementInterval: 5
 --- !u!4 &319968589
 Transform:
   m_ObjectHideFlags: 0
@@ -2395,7 +2396,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.07
+  m_VoxelSize: 0.046666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: bddc7d07919154e0eb6fff27adfbff15, type: 2}
   m_BuildHeightMesh: 0
@@ -7096,7 +7097,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 313345531606259432, guid: c7aec8a2341bf479eb567553471c5f5b, type: 3}
       propertyPath: moveChance
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 313345531606259432, guid: c7aec8a2341bf479eb567553471c5f5b, type: 3}
       propertyPath: underglowColor.b
@@ -7109,6 +7110,10 @@ PrefabInstance:
     - target: {fileID: 313345531606259432, guid: c7aec8a2341bf479eb567553471c5f5b, type: 3}
       propertyPath: underglowColor.r
       value: 0.8490566
+      objectReference: {fileID: 0}
+    - target: {fileID: 313345531606259432, guid: c7aec8a2341bf479eb567553471c5f5b, type: 3}
+      propertyPath: moveBackwardsChance
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 313345531606259432, guid: c7aec8a2341bf479eb567553471c5f5b, type: 3}
       propertyPath: waypoints.Array.size
@@ -9914,6 +9919,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4832579888910919484, guid: c7aec8a2341bf479eb567553471c5f5b, type: 3}
   m_PrefabInstance: {fileID: 1462272964}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2032943887 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 313345531606259432, guid: c7aec8a2341bf479eb567553471c5f5b, type: 3}
+  m_PrefabInstance: {fileID: 1462272964}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a93f7e47b082e4f5c83e9d3ba0379a9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2049268136
 PrefabInstance:
   m_ObjectHideFlags: 0
