@@ -19,18 +19,27 @@ public class EnemyRoamController : MonoBehaviour
     // chance to move to the next waypoint
     [Range(0, 20)] public int moveChance;
     [Range(0, 20)] public int moveBackwardsChance;
+    
 
     // --- private --- //
 
     private float _timer;
     private int _moveIndex;
-    
+
+    private Rigidbody _rb;
     private NavMeshAgent _navMeshAgent;
+    
     
     // --- computed --- //
     
+<<<<<<< Updated upstream
     private bool IsAtDoor => _moveIndex >= waypoints.Count;
 
+=======
+    private bool IsAtDoor => _moveIndex >= waypoints.Count-1;
+    
+    
+>>>>>>> Stashed changes
     // --- functions --- //
 
     private void MoveToIndex(int index)
@@ -41,10 +50,20 @@ public class EnemyRoamController : MonoBehaviour
         _navMeshAgent.destination = pos;
     }
 
+    private void ForceTransform(Transform t)
+    {
+        transform.position = t.position;
+        transform.rotation = t.rotation;
+    }
+
     private bool RandomChance(int chance)
     {
         var random = Random.Range(0, 20);
+<<<<<<< Updated upstream
         return random <= chance;
+=======
+        return random < chance;
+>>>>>>> Stashed changes
     }
 
     private void MovementOpportunity()
@@ -55,28 +74,42 @@ public class EnemyRoamController : MonoBehaviour
         // if we could go backwards, do a check for that now
         var direction = 1;
         if (!IsAtDoor)
-        {
             direction = RandomChance(moveBackwardsChance) ? -1 : 1;
+<<<<<<< Updated upstream
         }
 
         MoveToIndex(_moveIndex + direction);
+=======
+        _moveIndex = Mathf.Clamp(_moveIndex + direction, 0, waypoints.Count - 1);
+
+        // force move to door if we should
+        _navMeshAgent.isStopped = IsAtDoor;
+        _rb.constraints = IsAtDoor ? RigidbodyConstraints.FreezeRotation : RigidbodyConstraints.None;
+        if (IsAtDoor)
+            ForceTransform(waypoints[_moveIndex]);
+        else
+            MoveToIndex(_moveIndex);
+>>>>>>> Stashed changes
     }
 
+    
     // --- events --- //
 
     void Start()
     {
+        _rb = GetComponent<Rigidbody>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         
         underglowLight.color = underglowColor;
     }
 
-    // --- editor GUI --- //
+    
+    // --- DEBUG --- //
 
     void OnDrawGizmosSelected()
     {
         var offset = new Vector3(0f, 0.6f, 0f);
-        Gizmos.color = Color.dodgerBlue;
+        Gizmos.color = Color.orange;
         
         for (var i = 1; i < waypoints.Count; i++)
         {
