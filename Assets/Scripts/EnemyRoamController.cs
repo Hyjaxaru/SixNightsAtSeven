@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Mathematics.Geometry;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,9 +16,6 @@ public class EnemyRoamController : EnemyBase
     // transforms for enemy to go to
     public List<Transform> waypoints;
     
-    // the ai level of the enemy
-    
-
     // chance to move to the next waypoint
     [Range(0, 20)] public int moveChance;
     [Range(0, 20)] public int moveBackwardsChance;
@@ -32,11 +30,6 @@ public class EnemyRoamController : EnemyBase
     
     private bool IsAtDoor => _moveIndex >= waypoints.Count;
     
-    [SerializeField]
-    [Range(0, 20)] private int _aiLevel;
-
-    public override int AILevel { get => _aiLevel; set => _aiLevel = value; }
-
     // --- functions --- //
 
     private void MoveToIndex(int index)
@@ -50,13 +43,15 @@ public class EnemyRoamController : EnemyBase
     private bool RandomChance(int chance)
     {
         var random = Random.Range(0, 20);
-        return random <= chance;
+        var debugText = (random < chance) ? "Passed" : "Failed";
+        Debug.Log("Random: " + random + ", Chance: " +  chance + ", Check " + debugText);
+        return random < chance;
     }
 
     public override void MovementOpportunity()
     {
         // if we fail chance, fail the opportunity
-        if (RandomChance(moveChance)) return;
+        if (!RandomChance(moveChance)) return;
 
         // if we could go backwards, do a check for that now
         var direction = 1;
@@ -64,8 +59,9 @@ public class EnemyRoamController : EnemyBase
         {
             direction = RandomChance(moveBackwardsChance) ? -1 : 1;
         }
-
-        MoveToIndex(_moveIndex + direction);
+        
+        var newIndex = Mathf.Clamp(_moveIndex + direction, 0, waypoints.Count - 1);
+        MoveToIndex(newIndex);
     }
 
     // --- events --- //

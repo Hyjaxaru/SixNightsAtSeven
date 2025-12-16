@@ -18,6 +18,13 @@ public class GameManager : MonoBehaviour
     private float _movementTimer;
     
     // --- functions --- //
+
+    private void ProvideMovementOpportunity()
+    {
+        Debug.Log("Movement Fired");
+        
+        foreach (var enemy in animatronics) { enemy.MovementOpportunity(); } 
+    }
     
     // --- events --- //
     
@@ -37,7 +44,12 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        
+        _movementTimer += Time.deltaTime;
+        if (_movementTimer >= movementInterval) 
+        {
+            ProvideMovementOpportunity();
+            _movementTimer = 0;
+        }
     }
 }
 

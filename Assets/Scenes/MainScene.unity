@@ -2102,6 +2102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animatronics: []
+  movementInterval: 1
 --- !u!4 &319968589
 Transform:
   m_ObjectHideFlags: 0
