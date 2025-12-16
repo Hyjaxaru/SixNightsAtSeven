@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyRoamController : MonoBehaviour
+public class EnemyRoamController : MonoBehaviour, IEnemyBase
 {
     // --- public --- //
 
@@ -21,15 +21,17 @@ public class EnemyRoamController : MonoBehaviour
     [Range(0, 20)] public int moveBackwardsChance;
 
     // --- private --- //
-
-    private float _timer;
+    
     private int _moveIndex;
+    private int _aiLevel;
     
     private NavMeshAgent _navMeshAgent;
     
     // --- computed --- //
     
     private bool IsAtDoor => _moveIndex >= waypoints.Count;
+
+    public int AILevel { get => _aiLevel; set => _aiLevel = value; }
 
     // --- functions --- //
 
@@ -47,7 +49,7 @@ public class EnemyRoamController : MonoBehaviour
         return random <= chance;
     }
 
-    private void MovementOpportunity()
+    public void MovementOpportunity()
     {
         // if we fail chance, fail the opportunity
         if (RandomChance(moveChance)) return;

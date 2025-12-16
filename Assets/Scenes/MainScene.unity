@@ -2101,9 +2101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d89a1dbc2bda489a9e0918333d4d381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animatronics:
-  - gameObject: {fileID: 659557904}
-    aiLevel: 5
+  animatronics: []
 --- !u!4 &319968589
 Transform:
   m_ObjectHideFlags: 0
@@ -2911,7 +2909,7 @@ Transform:
   m_GameObject: {fileID: 562059600}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.99144495, z: -0, w: -0.13052584}
-  m_LocalPosition: {x: -0.34543777, y: 0, z: -1.7896373}
+  m_LocalPosition: {x: -0.050000012, y: 0, z: -2.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3448,11 +3446,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 269d2ad3a7fe10549a396379331dc89b, type: 3}
---- !u!1 &659557904 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4858322916831817668, guid: c7aec8a2341bf479eb567553471c5f5b, type: 3}
-  m_PrefabInstance: {fileID: 1462272964}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &683970862
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,15 +6,31 @@ public class GameManager : MonoBehaviour
     // --- public --- //
     
     // the animatronics
-    public List<EnemyData> animatronics;
+    public List<EnemyData> enemyData;
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // the interval before offering movement opportunities
+    [Range(1, 10)] public int movementInterval;
+    
+    // --- private --- //
+
+    private float _movementTimer;
+
+    private List<IEnemyBase> _enemyControllers;
+    
+    // --- functions --- //
+
+    private void MovementOpportunity()
+    {
+        
+    }
+    
+    // --- events --- //
+    
     void Start()
     {
         
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         
