@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,7 +29,7 @@ public class EnemyRoamController : MonoBehaviour, IEnemyBase
     // --- computed --- //
     
     private bool IsAtDoor => _moveIndex >= waypoints.Count;
-
+    
     public int AILevel { get => _aiLevel; set => _aiLevel = value; }
 
     // --- functions --- //

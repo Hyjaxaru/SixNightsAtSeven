@@ -4,6 +4,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     // --- public --- //
+
+    public static GameManager instance;
     
     // the animatronics
     public List<EnemyData> enemyData;
@@ -18,17 +20,34 @@ public class GameManager : MonoBehaviour
     private List<IEnemyBase> _enemyControllers;
     
     // --- functions --- //
-
-    private void MovementOpportunity()
-    {
-        
-    }
     
     // --- events --- //
     
     void Start()
     {
-        
+        // make singleton
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(instance);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        // get all the scripts for the enemies and store them
+        foreach (var enemy in enemyData)
+        {
+            var script = enemy.gameObject.GetComponent<IEnemyBase>();
+
+            if (script == null)
+            {
+                Debug.LogWarning("Enemy was not able to be loaded");
+                continue;
+            }
+            _enemyControllers.Add(script);
+        }
     }
     
     void Update()
