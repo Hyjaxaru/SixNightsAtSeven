@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using System.Linq;
+using Unity.Mathematics.Geometry;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyRoamController : MonoBehaviour
+public class EnemyRoamController : EnemyBase
 {
     // --- public --- //
 
@@ -15,31 +15,21 @@ public class EnemyRoamController : MonoBehaviour
     [Header("Movement")]
     // transforms for enemy to go to
     public List<Transform> waypoints;
-
+    
     // chance to move to the next waypoint
     [Range(0, 20)] public int moveChance;
     [Range(0, 20)] public int moveBackwardsChance;
-    
 
     // --- private --- //
-
-    private float _timer;
-    private int _moveIndex;
-
-    private Rigidbody _rb;
-    private NavMeshAgent _navMeshAgent;
     
+    private int _moveIndex;
+    
+    private NavMeshAgent _navMeshAgent;
     
     // --- computed --- //
     
-<<<<<<< Updated upstream
     private bool IsAtDoor => _moveIndex >= waypoints.Count;
-
-=======
-    private bool IsAtDoor => _moveIndex >= waypoints.Count-1;
     
-    
->>>>>>> Stashed changes
     // --- functions --- //
 
     private void MoveToIndex(int index)
@@ -50,66 +40,45 @@ public class EnemyRoamController : MonoBehaviour
         _navMeshAgent.destination = pos;
     }
 
-    private void ForceTransform(Transform t)
-    {
-        transform.position = t.position;
-        transform.rotation = t.rotation;
-    }
-
     private bool RandomChance(int chance)
     {
         var random = Random.Range(0, 20);
-<<<<<<< Updated upstream
-        return random <= chance;
-=======
+        var debugText = (random < chance) ? "Passed" : "Failed";
+        Debug.Log("Random: " + random + ", Chance: " +  chance + ", Check " + debugText);
         return random < chance;
->>>>>>> Stashed changes
     }
 
-    private void MovementOpportunity()
+    public override void MovementOpportunity()
     {
         // if we fail chance, fail the opportunity
-        if (RandomChance(moveChance)) return;
+        if (!RandomChance(moveChance)) return;
 
         // if we could go backwards, do a check for that now
         var direction = 1;
         if (!IsAtDoor)
+        {
             direction = RandomChance(moveBackwardsChance) ? -1 : 1;
-<<<<<<< Updated upstream
         }
-
-        MoveToIndex(_moveIndex + direction);
-=======
-        _moveIndex = Mathf.Clamp(_moveIndex + direction, 0, waypoints.Count - 1);
-
-        // force move to door if we should
-        _navMeshAgent.isStopped = IsAtDoor;
-        _rb.constraints = IsAtDoor ? RigidbodyConstraints.FreezeRotation : RigidbodyConstraints.None;
-        if (IsAtDoor)
-            ForceTransform(waypoints[_moveIndex]);
-        else
-            MoveToIndex(_moveIndex);
->>>>>>> Stashed changes
+        
+        var newIndex = Mathf.Clamp(_moveIndex + direction, 0, waypoints.Count - 1);
+        MoveToIndex(newIndex);
     }
 
-    
     // --- events --- //
 
     void Start()
     {
-        _rb = GetComponent<Rigidbody>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         
         underglowLight.color = underglowColor;
     }
 
-    
-    // --- DEBUG --- //
+    // --- editor GUI --- //
 
     void OnDrawGizmosSelected()
     {
         var offset = new Vector3(0f, 0.6f, 0f);
-        Gizmos.color = Color.orange;
+        Gizmos.color = Color.dodgerBlue;
         
         for (var i = 1; i < waypoints.Count; i++)
         {
