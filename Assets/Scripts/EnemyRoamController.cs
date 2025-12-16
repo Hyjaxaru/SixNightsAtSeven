@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyRoamController : MonoBehaviour, IEnemyBase
+public class EnemyRoamController : EnemyBase
 {
     // --- public --- //
 
@@ -14,6 +14,9 @@ public class EnemyRoamController : MonoBehaviour, IEnemyBase
     [Header("Movement")]
     // transforms for enemy to go to
     public List<Transform> waypoints;
+    
+    // the ai level of the enemy
+    
 
     // chance to move to the next waypoint
     [Range(0, 20)] public int moveChance;
@@ -22,7 +25,6 @@ public class EnemyRoamController : MonoBehaviour, IEnemyBase
     // --- private --- //
     
     private int _moveIndex;
-    private int _aiLevel;
     
     private NavMeshAgent _navMeshAgent;
     
@@ -30,7 +32,10 @@ public class EnemyRoamController : MonoBehaviour, IEnemyBase
     
     private bool IsAtDoor => _moveIndex >= waypoints.Count;
     
-    public int AILevel { get => _aiLevel; set => _aiLevel = value; }
+    [SerializeField]
+    [Range(0, 20)] private int _aiLevel;
+
+    public override int AILevel { get => _aiLevel; set => _aiLevel = value; }
 
     // --- functions --- //
 
@@ -48,7 +53,7 @@ public class EnemyRoamController : MonoBehaviour, IEnemyBase
         return random <= chance;
     }
 
-    public void MovementOpportunity()
+    public override void MovementOpportunity()
     {
         // if we fail chance, fail the opportunity
         if (RandomChance(moveChance)) return;
