@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
-public class NightPlayerController : MonoBehaviour
+public class NPMovementController : MonoBehaviour
 {
     // --- public --- //
     
