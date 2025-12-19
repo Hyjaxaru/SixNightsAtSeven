@@ -23,6 +23,8 @@ public class EnemyRoamController : EnemyBase
     
     // time to wait before jump-scare happens
     [Range(0, 10)] public int killDelay;
+    [Range(0, 20)] public int killChance;
+    [Range(0, 10)] public int goAwayDelay;
     
 
     // --- private --- //
@@ -32,6 +34,11 @@ public class EnemyRoamController : EnemyBase
 
     private Rigidbody _rb;
     private NavMeshAgent _navMeshAgent;
+
+    private float _timeAtDoor;
+    private float _timeAtDoorClosed;
+    
+    private NPDoorController _doorController;
     
     
     // --- computed --- //
@@ -41,24 +48,15 @@ public class EnemyRoamController : EnemyBase
     
     // --- functions --- //
 
-    private IEnumerator StartDeathCheck()
-    {
-        var elapsed = 0.0f;
-        while (elapsed < killDelay)
-        {
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-    }
-
     private void MoveToIndex(int index)
     {
         var pos = waypoints[_moveIndex].position;
         _navMeshAgent.destination = pos;
     }
 
-    private void ForceTransform(Transform t)
+    private void ForceToIndex()
     {
+        var t = waypoints[_moveIndex];
         transform.position = t.position;
         transform.rotation = t.rotation;
     }
@@ -88,7 +86,7 @@ public class EnemyRoamController : EnemyBase
         _navMeshAgent.isStopped = IsAtDoor;
         _rb.constraints = IsAtDoor ? RigidbodyConstraints.FreezeRotation : RigidbodyConstraints.None;
         if (IsAtDoor)
-            ForceTransform(waypoints[_moveIndex]);
+            ForceToIndex();
         else
             MoveToIndex(_moveIndex);
     }
@@ -102,6 +100,32 @@ public class EnemyRoamController : EnemyBase
         _navMeshAgent = GetComponent<NavMeshAgent>();
         
         underglowLight.color = underglowColor;
+    }
+
+    void Update()
+    {
+        if (IsAtDoor)
+        {
+            // increment the correct timer
+            if (_doorController.DoorState)
+                _timeAtDoor += Time.deltaTime;
+            else
+                _timeAtDoorClosed += Time.deltaTime;
+            
+            // decide what to do after waiting
+            if (_timeAtDoor >= killDelay)
+            {
+                // TODO
+            }
+
+            if (_timeAtDoorClosed >= goAwayDelay)
+            {
+                _timeAtDoor = 0;
+                _timeAtDoorClosed = 0;
+                _moveIndex = 0;
+                ForceToIndex();
+            }
+        }
     }
 
     
