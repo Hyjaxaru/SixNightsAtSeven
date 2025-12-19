@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class NightCameraController : MonoBehaviour
+public class NPCameraController : MonoBehaviour
 {
     // --- public --- //
     
@@ -44,7 +44,7 @@ public class NightCameraController : MonoBehaviour
 
     private bool _animationLock;
     private Camera _camSysCameraComp;
-    private FlashlightController _flashlight;
+    private NPFlashlightController _flashlight;
     
     
     // --- functions --- //
@@ -103,7 +103,7 @@ public class NightCameraController : MonoBehaviour
     void Start()
     {
         _camSysCameraComp = camSysCamera.GetComponent<Camera>();
-        _flashlight = GetComponent<FlashlightController>();
+        _flashlight = GetComponent<NPFlashlightController>();
 
         _camSysCameraComp.enabled = false;
         SetCameraTransform(cameraTransforms[0]);

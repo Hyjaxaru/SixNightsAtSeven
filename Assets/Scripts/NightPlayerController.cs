@@ -24,7 +24,7 @@ public class NightPlayerController : MonoBehaviour
     // --- private --- //
 
     private bool _animationLock;
-    private NightCameraController _cameraController;
+    private NPCameraController _cameraController;
     
     
     // --- functions --- //
@@ -60,7 +60,7 @@ public class NightPlayerController : MonoBehaviour
 
     void Start()
     {
-        _cameraController = GetComponent<NightCameraController>();
+        _cameraController = GetComponent<NPCameraController>();
     }
 
     void OnMove(InputValue inputValue)

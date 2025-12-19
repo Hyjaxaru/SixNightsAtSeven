@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class FlashlightController : MonoBehaviour
+public class NPFlashlightController : MonoBehaviour
 {
     private Light _flashlight;
 
