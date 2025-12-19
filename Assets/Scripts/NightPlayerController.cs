@@ -20,10 +20,12 @@ public class NightPlayerController : MonoBehaviour
 
     public bool IsAtDesk => officeIndex == officeDeskIndex;
 
+    
     // --- private --- //
 
     private bool _animationLock;
     private NightCameraController _cameraController;
+    
     
     // --- functions --- //
 

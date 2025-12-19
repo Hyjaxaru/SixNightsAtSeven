@@ -13,9 +13,11 @@ public class GameManager : MonoBehaviour
     // the interval before offering movement opportunities
     [Range(1, 10)] public int movementInterval;
     
+    
     // --- private --- //
 
     private float _movementTimer;
+    
     
     // --- functions --- //
 
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
             enemy.MovementOpportunity();
         } 
     }
+    
     
     // --- events --- //
     

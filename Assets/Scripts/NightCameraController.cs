@@ -39,11 +39,13 @@ public class NightCameraController : MonoBehaviour
         set => _camSysCameraComp.enabled = value;
     }
     
+    
     // --- private --- //
 
     private bool _animationLock;
     private Camera _camSysCameraComp;
     private FlashlightController _flashlight;
+    
     
     // --- functions --- //
     
@@ -94,6 +96,7 @@ public class NightCameraController : MonoBehaviour
     {
         cameraIndexText.text = "Camera " + (cameraIndex + 1);
     }
+    
     
     // --- events --- //
 

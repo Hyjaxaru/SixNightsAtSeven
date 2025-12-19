@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -20,6 +21,9 @@ public class EnemyRoamController : EnemyBase
     [Range(0, 20)] public int moveChance;
     [Range(0, 20)] public int moveBackwardsChance;
     
+    // time to wait before jump-scare happens
+    [Range(0, 10)] public int killDelay;
+    
 
     // --- private --- //
 
@@ -36,6 +40,16 @@ public class EnemyRoamController : EnemyBase
 
     
     // --- functions --- //
+
+    private IEnumerator StartDeathCheck()
+    {
+        var elapsed = 0.0f;
+        while (elapsed < killDelay)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
 
     private void MoveToIndex(int index)
     {
