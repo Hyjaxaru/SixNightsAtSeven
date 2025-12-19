@@ -34,26 +34,23 @@ public class NightPlayerController : MonoBehaviour
         _animationLock = true;
         
         // get the origin and target transforms for the player
-        var positionOrigin = transform.position;
-        var rotationOrigin = transform.rotation;
+        var origin = transform;
+        var target = cameraTransforms[officeIndex];
         
-        var positionTarget = cameraTransforms[officeIndex].position;
-        var rotationTarget = cameraTransforms[officeIndex].rotation;
-        
-        // begin moving te camera
+        // begin moving the camera
         var elapsed = 0.0f;
         while (elapsed < moveDuration)
         {
             var amt = Mathf.SmoothStep(0.0f, 1.0f, elapsed / moveDuration);
-            transform.position = Vector3.Lerp(positionOrigin, positionTarget, amt);
-            transform.rotation = Quaternion.Slerp(rotationOrigin, rotationTarget, amt);
+            transform.position = Vector3.Lerp(origin.position, target.position, amt);
+            transform.rotation = Quaternion.Slerp(origin.rotation, target.rotation, amt);
             
             elapsed += Time.deltaTime;
             yield return null;
         }
         
-        transform.position = positionTarget;
-        transform.rotation = rotationTarget;
+        transform.position = target.position;
+        transform.rotation = target.rotation;
         
         _animationLock = false;
     }
