@@ -23,7 +23,9 @@ public class NPDoorController : MonoBehaviour
     
     private bool IsFacingDoor => _movementController.officeIndex == doorActiveIndex;
     private bool IsFacingVent => _movementController.officeIndex == ventActiveIndex;
-    
+
+    public bool DoorState => doorController.isOpen;
+    public bool VentState => ventController.isOpen;
     
     // --- events --- //
 
