@@ -2140,6 +2140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d89a1dbc2bda489a9e0918333d4d381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1887639340}
   animatronics:
   - {fileID: 2032943887}
   movementInterval: 5

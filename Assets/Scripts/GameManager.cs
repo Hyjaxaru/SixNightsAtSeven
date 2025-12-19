@@ -5,7 +5,9 @@ public class GameManager : MonoBehaviour
 {
     // --- public --- //
 
-    public static GameManager instance;
+    public static GameManager Instance;
+
+    public GameObject player;
     
     // the animatronics
     public List<EnemyBase> animatronics;
@@ -18,6 +20,15 @@ public class GameManager : MonoBehaviour
 
     private float _movementTimer;
     
+    private NPMovementController _movementController;
+    private NPCameraController _cameraController;
+    private NPDoorController _doorController;
+    private NPFlashlightController _flashlightController;
+    
+    
+    // --- computed --- //
+
+    public bool IsOfficeDoorOpen => _doorController.DoorState;
     
     // --- functions --- //
 
@@ -34,16 +45,22 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
-        // make singleton
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(instance);
-        }
-        else
+        // destroy if more than once
+        if (Instance != null)
         {
             Destroy(gameObject);
+            return;
         }
+        
+        // make singleton
+        Instance = this;
+        DontDestroyOnLoad(Instance);
+        
+        // get player
+        _movementController = player.GetComponent<NPMovementController>();
+        _cameraController = player.GetComponent<NPCameraController>();
+        _doorController = player.GetComponent<NPDoorController>();
+        _flashlightController = player.GetComponent<NPFlashlightController>();
     }
     
     void Update()

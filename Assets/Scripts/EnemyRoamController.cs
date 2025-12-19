@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -38,8 +36,6 @@ public class EnemyRoamController : EnemyBase
     private float _timeAtDoor;
     private float _timeAtDoorClosed;
     
-    private NPDoorController _doorController;
-    
     
     // --- computed --- //
     
@@ -48,7 +44,7 @@ public class EnemyRoamController : EnemyBase
     
     // --- functions --- //
 
-    private void MoveToIndex(int index)
+    private void MoveToIndex()
     {
         var pos = waypoints[_moveIndex].position;
         _navMeshAgent.destination = pos;
@@ -88,7 +84,15 @@ public class EnemyRoamController : EnemyBase
         if (IsAtDoor)
             ForceToIndex();
         else
-            MoveToIndex(_moveIndex);
+            MoveToIndex();
+    }
+
+    private void PushEnemyBack()
+    {
+        _timeAtDoor = 0;
+        _timeAtDoorClosed = 0;
+        _moveIndex = 0;
+        ForceToIndex();
     }
 
     
@@ -107,7 +111,7 @@ public class EnemyRoamController : EnemyBase
         if (IsAtDoor)
         {
             // increment the correct timer
-            if (_doorController.DoorState)
+            if (GameManager.Instance.IsOfficeDoorOpen)
                 _timeAtDoor += Time.deltaTime;
             else
                 _timeAtDoorClosed += Time.deltaTime;
@@ -115,16 +119,12 @@ public class EnemyRoamController : EnemyBase
             // decide what to do after waiting
             if (_timeAtDoor >= killDelay)
             {
-                // TODO
+                Debug.Log("You Died! :)");
+                PushEnemyBack();
             }
 
             if (_timeAtDoorClosed >= goAwayDelay)
-            {
-                _timeAtDoor = 0;
-                _timeAtDoorClosed = 0;
-                _moveIndex = 0;
-                ForceToIndex();
-            }
+                PushEnemyBack();
         }
     }
 
