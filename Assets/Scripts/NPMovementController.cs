@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class NPMovementController : MonoBehaviour
 {
@@ -34,23 +33,27 @@ public class NPMovementController : MonoBehaviour
         _animationLock = true;
         
         // get the origin and target transforms for the player
-        var origin = transform;
-        var target = cameraTransforms[officeIndex];
+        var originPosition = transform.position;
+        var originRotation = transform.rotation;
+        
+        var targetPosition = cameraTransforms[officeIndex].position;
+        var targetRotation = cameraTransforms[officeIndex].rotation;
+        
         
         // begin moving the camera
         var elapsed = 0.0f;
         while (elapsed < moveDuration)
         {
             var amt = Mathf.SmoothStep(0.0f, 1.0f, elapsed / moveDuration);
-            transform.position = Vector3.Lerp(origin.position, target.position, amt);
-            transform.rotation = Quaternion.Slerp(origin.rotation, target.rotation, amt);
+            transform.position = Vector3.Lerp(originPosition, targetPosition, amt);
+            transform.rotation = Quaternion.Slerp(originRotation, targetRotation, amt);
             
             elapsed += Time.deltaTime;
             yield return null;
         }
         
-        transform.position = target.position;
-        transform.rotation = target.rotation;
+        transform.position = targetPosition;
+        transform.rotation = targetRotation;
         
         _animationLock = false;
     }

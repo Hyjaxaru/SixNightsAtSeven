@@ -27,12 +27,17 @@ public class NPDoorController : MonoBehaviour
     
     // --- events --- //
 
-    private void OnInteract(InputValue inputValue)
+    void Start()
+    {
+        _movementController = GetComponent<NPMovementController>();
+    }
+
+    void OnInteract(InputValue _)
     {
         if (IsFacingDoor)
             doorController.Toggle();
         
-        else if (IsFacingVent)
+        if (IsFacingVent)
             ventController.Toggle();
     }
 }

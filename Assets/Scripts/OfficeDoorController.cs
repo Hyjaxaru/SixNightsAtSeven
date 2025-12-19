@@ -8,8 +8,8 @@ public class OfficeDoorController : MonoBehaviour
     
     public bool isOpen;
     
-    public Transform closedTarget;
     public Transform openTarget;
+    public Transform closedTarget;
 
     [Range(0, 1)] public float toggleDelay = 0.5f;
     
@@ -25,23 +25,28 @@ public class OfficeDoorController : MonoBehaviour
     {
         _animationLock = true;
         
-        var origin = transform;
-        var target = isOpen ? openTarget : closedTarget;
+        
+        // get the origin and target transforms for the player
+        var originPosition = transform.position;
+        var originRotation = transform.rotation;
+        
+        var targetPosition = isOpen ? openTarget.position : closedTarget.position;
+        var targetRotation = isOpen ? openTarget.rotation : closedTarget.rotation;
         
         // begin moving the door
         var elapsed = 0.0f;
         while (elapsed < toggleDelay)
         {
             var amt = Mathf.SmoothStep(0.0f, 1.0f, elapsed / toggleDelay);
-            transform.position = Vector3.Lerp(origin.position, target.position, amt);
-            transform.rotation = Quaternion.Slerp(origin.rotation, target.rotation, amt);
+            transform.position = Vector3.Lerp(originPosition, targetPosition, amt);
+            transform.rotation = Quaternion.Slerp(originRotation, targetRotation, amt);
             
             elapsed += Time.deltaTime;
             yield return null;
         }
         
-        transform.position = target.position;
-        transform.rotation = target.rotation;
+        transform.position = targetPosition;
+        transform.rotation = targetRotation;
         
         _animationLock = false;
     }
