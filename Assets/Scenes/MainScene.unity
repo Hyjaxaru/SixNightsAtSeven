@@ -2102,7 +2102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animatronics:
-  - {fileID: 0}
+  - {fileID: 2032943887}
   movementInterval: 5
 --- !u!4 &319968589
 Transform:
@@ -9919,6 +9919,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4832579888910919484, guid: c7aec8a2341bf479eb567553471c5f5b, type: 3}
   m_PrefabInstance: {fileID: 1462272964}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2032943887 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 313345531606259432, guid: c7aec8a2341bf479eb567553471c5f5b, type: 3}
+  m_PrefabInstance: {fileID: 1462272964}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a93f7e47b082e4f5c83e9d3ba0379a9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2049268136
 PrefabInstance:
   m_ObjectHideFlags: 0

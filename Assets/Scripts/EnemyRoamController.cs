@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyRoamController : MonoBehaviour
+public class EnemyRoamController : EnemyBase
 {
     // --- public --- //
 
@@ -39,8 +39,6 @@ public class EnemyRoamController : MonoBehaviour
 
     private void MoveToIndex(int index)
     {
-        _moveIndex = index;
-
         var pos = waypoints[_moveIndex].position;
         _navMeshAgent.destination = pos;
     }
@@ -57,11 +55,15 @@ public class EnemyRoamController : MonoBehaviour
         return random <= chance;
     }
 
-    private void MovementOpportunity()
+    public override void MovementOpportunity()
     {
-        // if we fail chance, fail the opportunity
         if (RandomChance(moveChance)) return;
 
+        MoveToNewWaypoint();
+    }
+
+    private void MoveToNewWaypoint()
+    {
         // if we could go backwards, do a check for that now
         var direction = 1;
         if (!IsAtDoor)
@@ -76,8 +78,6 @@ public class EnemyRoamController : MonoBehaviour
         else
             MoveToIndex(_moveIndex);
     }
-    
-    
 
     
     // --- events --- //

@@ -21,9 +21,10 @@ public class GameManager : MonoBehaviour
 
     private void ProvideMovementOpportunity()
     {
-        Debug.Log("Movement Fired");
-        
-        foreach (var enemy in animatronics) { enemy.MovementOpportunity(); } 
+        foreach (var enemy in animatronics)
+        {
+            enemy.MovementOpportunity();
+        } 
     }
     
     // --- events --- //
