@@ -31,12 +31,13 @@ public class NPCameraController : MonoBehaviour
     // the current index in the camera position transform list
     public int cameraIndex;
     
+    // the text in the camera ui that shows what camera is active
     public TextMeshPro cameraIndexText;
 
     public bool CameraState
     {
         get => _camSysCameraComp.enabled;
-        set => _camSysCameraComp.enabled = value;
+        private set => _camSysCameraComp.enabled = value;
     }
     
     

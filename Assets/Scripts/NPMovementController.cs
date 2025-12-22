@@ -7,23 +7,24 @@ public class NPMovementController : MonoBehaviour
 {
     // --- public --- //
     
-    // the transforms of each position for the office camera to move to
     public List<Transform> cameraTransforms;
     
-    // the player's current position in the office
     public int officeIndex = 1;
     public int officeDeskIndex = 1;
     
     // The speed that the player moves in the office
     [Range(0, 1)] public float moveDuration = 0.5f;
-
-    public bool IsAtDesk => officeIndex == officeDeskIndex;
-
+    
     
     // --- private --- //
 
     private bool _animationLock;
     private NPCameraController _cameraController;
+    
+    
+    // --- computed --- //
+    
+    public bool IsAtDesk => officeIndex == officeDeskIndex;
     
     
     // --- functions --- //

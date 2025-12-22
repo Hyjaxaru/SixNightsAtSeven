@@ -21,20 +21,18 @@ public class EnemyRoamController : EnemyBase
     
     // time to wait before jump-scare happens
     [Range(0, 10)] public int killDelay;
-    [Range(0, 20)] public int killChance;
     [Range(0, 10)] public int goAwayDelay;
     
 
     // --- private --- //
-
-    private float _timer;
-    private int _moveIndex;
-
+    
     private Rigidbody _rb;
     private NavMeshAgent _navMeshAgent;
 
+    private int _moveIndex;
     private float _timeAtDoor;
     private float _timeAtDoorClosed;
+    private float _timeToDeath;
     
     
     // --- computed --- //
@@ -95,6 +93,14 @@ public class EnemyRoamController : EnemyBase
         ForceToIndex();
     }
 
+    private void StartDeath()
+    {
+        _timeAtDoor = 0;
+        _timeAtDoorClosed = 0;
+        _timeToDeath = GameManager.Instance.GetTimeToDeath();
+        GameManager.Instance.isPlayerDead = true;
+    }
+    
     
     // --- events --- //
 
@@ -108,24 +114,30 @@ public class EnemyRoamController : EnemyBase
 
     void Update()
     {
-        if (IsAtDoor)
+        // if the player is dead, just do this
+        if (GameManager.Instance.isPlayerDead)
         {
-            // increment the correct timer
-            if (GameManager.Instance.IsOfficeDoorOpen)
-                _timeAtDoor += Time.deltaTime;
-            else
-                _timeAtDoorClosed += Time.deltaTime;
-            
-            // decide what to do after waiting
-            if (_timeAtDoor >= killDelay)
+            _timeToDeath -= Time.deltaTime;
+            if (_timeToDeath <= 0f)
             {
-                Debug.Log("You Died! :)");
-                PushEnemyBack();
+                Debug.Log("JUMP SCARE!!!");
             }
-
-            if (_timeAtDoorClosed >= goAwayDelay)
-                PushEnemyBack();
+            return;
         }
+
+        if (!IsAtDoor) return;
+        
+        // increment the correct timer
+        if (GameManager.Instance.IsOfficeDoorOpen)
+            _timeAtDoor += Time.deltaTime;
+        else
+            _timeAtDoorClosed += Time.deltaTime;
+            
+        // decide what to do after waiting
+        if (_timeAtDoor >= killDelay)
+            StartDeath();
+        else if (_timeAtDoorClosed >= goAwayDelay)
+            PushEnemyBack();
     }
 
     

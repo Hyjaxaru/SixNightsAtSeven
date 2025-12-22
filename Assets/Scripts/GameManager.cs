@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
+    // the player game object (that holds the scripts)
     public GameObject player;
     
     // the animatronics
@@ -14,6 +15,13 @@ public class GameManager : MonoBehaviour
     
     // the interval before offering movement opportunities
     [Range(1, 10)] public int movementInterval;
+    
+    // is the player dead?
+    public bool isPlayerDead;
+    
+    // time from player death in logic and jump-scare
+    [Range(1, 10)] public int deathMinTime;
+    [Range(1, 10)] public int deathMaxTime;
     
     
     // --- private --- //
@@ -30,7 +38,10 @@ public class GameManager : MonoBehaviour
 
     public bool IsOfficeDoorOpen => _doorController.DoorState;
     
+    
     // --- functions --- //
+    
+    public float GetTimeToDeath() => Random.Range(deathMinTime, deathMaxTime);
 
     private void ProvideMovementOpportunity()
     {
@@ -39,7 +50,7 @@ public class GameManager : MonoBehaviour
             enemy.MovementOpportunity();
         } 
     }
-    
+
     
     // --- events --- //
     
@@ -65,12 +76,13 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
+        if (isPlayerDead) return;
+        
         _movementTimer += Time.deltaTime;
-        if (_movementTimer >= movementInterval) 
-        {
-            ProvideMovementOpportunity();
-            _movementTimer = 0;
-        }
+        if (_movementTimer < movementInterval) return;
+        
+        ProvideMovementOpportunity();
+        _movementTimer = 0;
     }
 }
 
