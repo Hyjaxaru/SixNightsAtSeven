@@ -143,7 +143,7 @@ public class EnemyRoamController : EnemyBase
     
     // --- DEBUG --- //
 
-    void OnDrawGizmosSelected()
+    void OnDrawGizmos()
     {
         var offset = new Vector3(0f, 0.6f, 0f);
         Gizmos.color = Color.orange;
