@@ -7,12 +7,12 @@ public class EnemyRoamController : EnemyBase
     // --- public --- //
 
     // cosmetic
-    [Header("Underglow")] public Light underglowLight;
+    [Header("Underglow")]
+    public Light underglowLight;
     public Color underglowColor;
 
     // movement
     [Header("Movement")]
-    // transforms for enemy to go to
     public List<Transform> waypoints;
 
     // chance to move to the next waypoint
