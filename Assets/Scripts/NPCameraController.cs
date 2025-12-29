@@ -33,6 +33,10 @@ public class NPCameraController : MonoBehaviour
     
     // the text in the camera ui that shows what camera is active
     public TextMeshPro cameraIndexText;
+    public TextMeshPro cameraTimeText;
+    
+    // the time text that shows always
+    public TextMeshPro officeTimeText;
 
     public bool CameraState
     {
@@ -93,11 +97,17 @@ public class NPCameraController : MonoBehaviour
         camSysCamera.transform.rotation = t.rotation;
     }
 
-    private void SetCameraText()
+    private void SetCameraIndexText()
     {
         cameraIndexText.text = "Camera " + (cameraIndex + 1);
     }
-    
+
+    public void SetCameraTimeText()
+    {
+        var timeText = GameManager.Instance.HourDisplay + " AM";
+        cameraTimeText.text = timeText;
+        officeTimeText.text = timeText;
+    }
     
     // --- events --- //
 
@@ -108,7 +118,8 @@ public class NPCameraController : MonoBehaviour
 
         _camSysCameraComp.enabled = false;
         SetCameraTransform(cameraTransforms[0]);
-        SetCameraText();
+        SetCameraIndexText();
+        SetCameraTimeText();
     }
     
     void OnViewCameras(InputValue _)
@@ -136,6 +147,6 @@ public class NPCameraController : MonoBehaviour
         cameraIndex = LoopInt(cameraIndex + xInt, 0, cameraTransforms.Count - 1);
         
         SetCameraTransform(cameraTransforms[cameraIndex]);
-        SetCameraText();
+        SetCameraIndexText();
     }
 }

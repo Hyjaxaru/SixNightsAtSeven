@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour
             _nightTimer = 0;
             _nightHourCount++;
             Debug.Log("Hour " +  _nightHourCount);
+            _cameraController.SetCameraTimeText();
         }
     }
 }
