@@ -36,6 +36,8 @@ public class NPDoorController : MonoBehaviour
 
     void OnInteract(InputValue _)
     {
+        if (GameManager.Instance.isPlayerDead) return;
+        
         if (IsFacingDoor)
             doorController.Toggle();
         

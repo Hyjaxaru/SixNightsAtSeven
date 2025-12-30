@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
     public bool isPlayerDead;
     [Range(1, 10)] public int deathMinTime;
     [Range(1, 10)] public int deathMaxTime;
+    [Range(1, 5)] public float deathDuration;
+    public string deathSceneName;
+    
     
     // --- private --- //
 

@@ -33,6 +33,7 @@ public class EnemyRoamController : EnemyBase
     private float _timeAtDoor;
     private float _timeAtDoorClosed;
     private float _timeToDeath;
+    private bool _killingPlayer;
     
     
     // --- computed --- //
@@ -98,7 +99,7 @@ public class EnemyRoamController : EnemyBase
         _timeAtDoor = 0;
         _timeAtDoorClosed = 0;
         _timeToDeath = GameManager.Instance.GetTimeToDeath();
-        GameManager.Instance.isPlayerDead = true;
+        _killingPlayer = true;
     }
     
     
@@ -114,13 +115,15 @@ public class EnemyRoamController : EnemyBase
 
     void Update()
     {
-        // if the player is dead, just do this
-        if (GameManager.Instance.isPlayerDead)
+        // dont do anything if the player is dead
+        if (GameManager.Instance.isPlayerDead) return;
+
+        if (_killingPlayer)
         {
             _timeToDeath -= Time.deltaTime;
             if (_timeToDeath <= 0f)
             {
-                Debug.Log("JUMP SCARE!!!");
+                GameManager.Instance.isPlayerDead = true;
             }
             return;
         }

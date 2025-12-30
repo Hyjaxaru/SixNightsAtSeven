@@ -2153,6 +2153,8 @@ MonoBehaviour:
   isPlayerDead: 0
   deathMinTime: 10
   deathMaxTime: 10
+  deathDuration: 3
+  deathSceneName: EndingDeath
 --- !u!4 &319968589
 Transform:
   m_ObjectHideFlags: 0

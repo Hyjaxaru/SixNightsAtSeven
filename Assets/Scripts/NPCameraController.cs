@@ -143,6 +143,7 @@ public class NPCameraController : MonoBehaviour
     
     void OnViewCameras(InputValue _)
     {
+        if (GameManager.Instance.isPlayerDead) return;
         if (!camerasEnabled) return;
         if (_animationLock) return;
         
@@ -156,6 +157,7 @@ public class NPCameraController : MonoBehaviour
 
     void OnMove(InputValue inputValue)
     {
+        if (GameManager.Instance.isPlayerDead) return;
         if (!CameraState) return; // don't do anything if cams aren't open
         
         var value = inputValue.Get<Vector2>();

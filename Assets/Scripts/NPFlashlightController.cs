@@ -14,6 +14,7 @@ public class NPFlashlightController : MonoBehaviour
     
     void OnFlash(InputValue _)
     {
+        if (GameManager.Instance.isPlayerDead) return;
         _flashlight.enabled = !_flashlight.enabled;
     }
 }
