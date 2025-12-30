@@ -2143,6 +2143,8 @@ MonoBehaviour:
   player: {fileID: 1887639340}
   nightHours: 6
   nightHourLength: 60
+  deathSceneName: EndingDeath
+  winSceneName: EndingWin
   nightPower: 1000
   nightPowerInterval: 1
   nightIdleDrain: 1
@@ -2154,7 +2156,7 @@ MonoBehaviour:
   deathMinTime: 10
   deathMaxTime: 10
   deathDuration: 3
-  deathSceneName: EndingDeath
+  scarePositionOffset: {x: 0, y: 0, z: 0.5}
 --- !u!4 &319968589
 Transform:
   m_ObjectHideFlags: 0
@@ -2843,6 +2845,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1635843417}
     m_Modifications:
+    - target: {fileID: 313345531606259432, guid: c7aec8a2341bf479eb567553471c5f5b, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1887639340}
     - target: {fileID: 313345531606259432, guid: c7aec8a2341bf479eb567553471c5f5b, type: 3}
       propertyPath: killDelay
       value: 5
@@ -8061,6 +8067,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1689725334}
     m_Modifications:
+    - target: {fileID: 313345531606259432, guid: c7aec8a2341bf479eb567553471c5f5b, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1887639340}
     - target: {fileID: 313345531606259432, guid: c7aec8a2341bf479eb567553471c5f5b, type: 3}
       propertyPath: killDelay
       value: 5

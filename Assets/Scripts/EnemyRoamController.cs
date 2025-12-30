@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -101,6 +102,21 @@ public class EnemyRoamController : EnemyBase
         _timeToDeath = GameManager.Instance.GetTimeToDeath();
         _killingPlayer = true;
     }
+
+    private IEnumerator JumpScare()
+    {
+        // move to jump-scare
+        var player = GameManager.Instance.player;
+        var offset = GameManager.Instance.scarePositionOffset;
+        transform.SetParent(player.transform);
+        transform.position = player.transform.position
+                             + player.transform.TransformDirection(offset);
+        
+        // wait
+        yield return new WaitForSeconds(GameManager.Instance.deathDuration);
+        GameManager.Instance.StartSwitchToDeathScene();
+    }
+    
     
     
     // --- events --- //
@@ -115,7 +131,7 @@ public class EnemyRoamController : EnemyBase
 
     void Update()
     {
-        // dont do anything if the player is dead
+        // don't do anything if the player is dead
         if (GameManager.Instance.isPlayerDead) return;
 
         if (_killingPlayer)
@@ -124,6 +140,7 @@ public class EnemyRoamController : EnemyBase
             if (_timeToDeath <= 0f)
             {
                 GameManager.Instance.isPlayerDead = true;
+                StartCoroutine(JumpScare());
             }
             return;
         }
@@ -150,10 +167,10 @@ public class EnemyRoamController : EnemyBase
     {
         var offset = new Vector3(0f, 0.6f, 0f);
         Gizmos.color = Color.orange;
-        
+
         for (var i = 1; i < waypoints.Count; i++)
         {
-            Gizmos.DrawLine(waypoints[i-1].position + offset, waypoints[i].position + offset);
+            Gizmos.DrawLine(waypoints[i - 1].position + offset, waypoints[i].position + offset);
         }
     }
 }

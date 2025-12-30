@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -16,6 +18,8 @@ public class GameManager : MonoBehaviour
     [Header("Night settings")]
     [Range(1, 10)] public int nightHours = 6;
     [Range(1, 120)] public float nightHourLength = 60;
+    public string deathSceneName;
+    public string winSceneName;
     
     // power controls
     [Space]
@@ -33,7 +37,7 @@ public class GameManager : MonoBehaviour
     [Range(1, 10)] public int deathMinTime;
     [Range(1, 10)] public int deathMaxTime;
     [Range(1, 5)] public float deathDuration;
-    public string deathSceneName;
+    public Vector3 scarePositionOffset = new Vector3(0f, 0f, 0.5f);
     
     
     // --- private --- //
@@ -50,7 +54,7 @@ public class GameManager : MonoBehaviour
     
     
     // --- computed --- //
-
+    
     public bool IsOfficeDoorOpen => _doorController.DoorState;
     public int HourDisplay => _nightHourCount == 0 ? 12 : _nightHourCount;
     public int CurrentPowerUsage => CalculateCurrentPowerUsage();
@@ -58,6 +62,21 @@ public class GameManager : MonoBehaviour
     // --- functions --- //
     
     public float GetTimeToDeath() => Random.Range(deathMinTime, deathMaxTime);
+
+    public void StartSwitchToDeathScene() => StartCoroutine(AsyncSwitchToScene(deathSceneName));
+    public void StartSwitchToWinScene() => StartCoroutine(AsyncSwitchToScene(winSceneName));
+
+    private IEnumerator AsyncSwitchToScene(string sceneName)
+    {
+        // this code is borrowed from the unity manual
+        // https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager.LoadSceneAsync.html
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        
+        while (asyncLoad != null && !asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
 
     private void ProvideMovementOpportunities()
     {
@@ -93,7 +112,7 @@ public class GameManager : MonoBehaviour
     
     // --- events --- //
     
-    void Start()
+    void Awake()
     {
         // destroy if more than once
         if (Instance != null)
@@ -105,8 +124,10 @@ public class GameManager : MonoBehaviour
         // make singleton
         Instance = this;
         DontDestroyOnLoad(Instance);
-        
-        // get player
+    }
+
+    void Start()
+    {
         _movementController = player.GetComponent<NPMovementController>();
         _cameraController = player.GetComponent<NPCameraController>();
         _doorController = player.GetComponent<NPDoorController>();
@@ -146,9 +167,9 @@ public class GameManager : MonoBehaviour
             _cameraController.SetCurrentTimeText();
             
             // if the hour is 6, we win!
-            if (_nightHourCount >= 6)
+            if (_nightHourCount >= nightHours)
             {
-                
+                StartSwitchToWinScene();
             }
         }
     }
