@@ -85,6 +85,8 @@ public class GameManager : MonoBehaviour
         return current;
     }
 
+    private void DrainPower() => nightPower -= CurrentPowerUsage;
+
     
     // --- events --- //
     
@@ -130,7 +132,7 @@ public class GameManager : MonoBehaviour
         if (_powerTimer >= nightPowerInterval)
         {
             _powerTimer = 0;
-            nightPower -= CurrentPowerUsage;
+            DrainPower();
         }
         
         // increment hour
