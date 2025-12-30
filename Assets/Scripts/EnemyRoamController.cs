@@ -59,7 +59,7 @@ public class EnemyRoamController : EnemyBase
     private bool RandomChance(int chance)
     {
         var random = Random.Range(0, 20);
-        return random <= chance;
+        return random < chance;
     }
 
     public override void MovementOpportunity()
