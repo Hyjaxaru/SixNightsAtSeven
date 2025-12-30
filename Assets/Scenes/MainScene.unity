@@ -2143,8 +2143,8 @@ MonoBehaviour:
   player: {fileID: 1887639340}
   nightHours: 6
   nightHourLength: 60
-  nightPower: 10000
-  nightPowerInterval: 0.5
+  nightPower: 1000
+  nightPowerInterval: 1
   nightIdleDrain: 1
   animatronics:
   - {fileID: 2032943887}
