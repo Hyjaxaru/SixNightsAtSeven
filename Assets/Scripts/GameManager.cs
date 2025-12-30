@@ -17,18 +17,25 @@ public class GameManager : MonoBehaviour
     [Range(1, 10)] public int nightHours = 6;
     [Range(1, 120)] public float nightHourLength = 60;
     
+    // power controls
+    [Space]
+    [Range(0, 10000)] public int nightPower;
+    [Range(0, 10)] public float nightPowerInterval;
+    [Range(0, 3)] public int nightIdleDrain;
+    
     // the animatronics
     [Header("Animatronics")]
     public List<EnemyBase> animatronics;
     
+    // movement and death controlls
     [Range(1, 10)] public int movementInterval;
     public bool isPlayerDead;
     [Range(1, 10)] public int deathMinTime;
     [Range(1, 10)] public int deathMaxTime;
     
-    
     // --- private --- //
-    
+
+    private float _powerTimer;
     private float _movementTimer;
     private float _nightTimer;
     private int _nightHourCount;
@@ -43,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     public bool IsOfficeDoorOpen => _doorController.DoorState;
     public int HourDisplay => _nightHourCount == 0 ? 12 : _nightHourCount;
+    public int CurrentPowerUsage => CalculateCurrentPowerUsage();
 
     // --- functions --- //
     
@@ -54,6 +62,27 @@ public class GameManager : MonoBehaviour
         {
             enemy.MovementOpportunity();
         } 
+    }
+
+    private int CalculateCurrentPowerUsage()
+    {
+        var current = nightIdleDrain;
+        
+        // flashlight drains 1
+        if (_flashlightController.IsOn)
+            current++;
+        
+        // cameras drain 1
+        if (_cameraController.CameraState)
+            current++;
+        
+        // doors drain power
+        if (!_doorController.DoorState)
+            current++;
+        // if (!_doorController.VentState)
+        //     current++;
+        
+        return current;
     }
 
     
@@ -82,16 +111,26 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (isPlayerDead) return;
+
+        _cameraController.SetPowerUsageText();
         
-        // movement and night timing are seperate because floating point math!
+        // timers (because yes, we need three)
         _nightTimer += Time.deltaTime;
         _movementTimer += Time.deltaTime;
+        _powerTimer += Time.deltaTime;
 
         // provide movement
         if (_movementTimer >= movementInterval)
         {
             _movementTimer = 0;
             ProvideMovementOpportunities();
+        }
+        
+        // use power
+        if (_powerTimer >= nightPowerInterval)
+        {
+            _powerTimer = 0;
+            nightPower -= CurrentPowerUsage;
         }
         
         // increment hour

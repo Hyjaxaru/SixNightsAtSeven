@@ -2143,6 +2143,9 @@ MonoBehaviour:
   player: {fileID: 1887639340}
   nightHours: 6
   nightHourLength: 60
+  nightPower: 10000
+  nightPowerInterval: 0.5
+  nightIdleDrain: 1
   animatronics:
   - {fileID: 2032943887}
   - {fileID: 871633875}
@@ -6021,7 +6024,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181447960}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 4
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -9828,7 +9831,7 @@ MonoBehaviour:
   cameraIndexText: {fileID: 152745915}
   cameraTimeText: {fileID: 1291956616}
   officeTimeText: {fileID: 1240481944}
-  cameraPowerText: {fileID: 0}
+  cameraPowerText: {fileID: 330871360}
   officePowerText: {fileID: 1451344696}
 --- !u!114 &1887639345
 MonoBehaviour:

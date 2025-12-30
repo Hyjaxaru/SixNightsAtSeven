@@ -40,12 +40,6 @@ public class NPCameraController : MonoBehaviour
     [Space]
     public TextMeshPro cameraPowerText;
     public TextMeshPro officePowerText;
-
-    public bool CameraState
-    {
-        get => _camSysCameraComp.enabled;
-        private set => _camSysCameraComp.enabled = value;
-    }
     
     
     // --- private --- //
@@ -53,6 +47,15 @@ public class NPCameraController : MonoBehaviour
     private bool _animationLock;
     private Camera _camSysCameraComp;
     private NPFlashlightController _flashlight;
+    
+    
+    // --- computed --- //
+    
+    public bool CameraState
+    {
+        get => _camSysCameraComp.enabled;
+        private set => _camSysCameraComp.enabled = value;
+    }
     
     
     // --- functions --- //
@@ -114,8 +117,12 @@ public class NPCameraController : MonoBehaviour
 
     public void SetPowerUsageText()
     {
-        var usage = new string('█', 3); //TODO: proper usage
-        var text = 26 + "%\nUsage: " + usage; //TODO: proper percent
+        var power = GameManager.Instance.nightPower;
+        var usage = GameManager.Instance.CurrentPowerUsage;
+        
+        var usageString = new string('█', usage);
+        var text = power / 100 + "% (" + power + ")\nUsage: " + usageString;
+        
         cameraPowerText.text = text;
         officePowerText.text = text;
     }
@@ -131,6 +138,7 @@ public class NPCameraController : MonoBehaviour
         SetCameraTransform(cameraTransforms[0]);
         SetCameraIndexText();
         SetCurrentTimeText();
+        SetPowerUsageText();
     }
     
     void OnViewCameras(InputValue _)
