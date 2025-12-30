@@ -99,8 +99,13 @@ public class GameManager : MonoBehaviour
         {
             _nightTimer = 0;
             _nightHourCount++;
-            Debug.Log("Hour " +  _nightHourCount);
-            _cameraController.SetCameraTimeText();
+            _cameraController.SetCurrentTimeText();
+            
+            // if the hour is 6, we win!
+            if (_nightHourCount >= 6)
+            {
+                
+            }
         }
     }
 }
