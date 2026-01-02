@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,13 +30,13 @@ public class GameManager : MonoBehaviour
     [Header("Animatronics")]
     public List<EnemyBase> animatronics;
     
-    // movement and death controlls
+    // movement and death controls
     [Range(1, 10)] public int movementInterval;
     public bool isPlayerDead;
     [Range(1, 10)] public int deathMinTime;
     [Range(1, 10)] public int deathMaxTime;
     [Range(1, 5)] public float deathDuration;
-    public Vector3 scarePositionOffset = new Vector3(0f, 0f, 0.5f);
+    public MeshRenderer jumpScareTextureMesh;
     
     
     // --- private --- //
@@ -62,9 +61,20 @@ public class GameManager : MonoBehaviour
     // --- functions --- //
     
     public float GetTimeToDeath() => Random.Range(deathMinTime, deathMaxTime);
+    
+    public IEnumerator JumpScare()
+    {
+        // show
+        jumpScareTextureMesh.enabled = true;
+        _flashlightController.Toggle(true);
+        
+        // wait
+        yield return new WaitForSeconds(deathDuration);
+        StartSwitchToDeathScene();
+    }
 
     public void StartSwitchToDeathScene() => StartCoroutine(AsyncSwitchToScene(deathSceneName));
-    public void StartSwitchToWinScene() => StartCoroutine(AsyncSwitchToScene(winSceneName));
+    private void StartSwitchToWinScene() => StartCoroutine(AsyncSwitchToScene(winSceneName));
 
     private IEnumerator AsyncSwitchToScene(string sceneName)
     {

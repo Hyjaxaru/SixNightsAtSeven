@@ -102,21 +102,6 @@ public class EnemyRoamController : EnemyBase
         _timeToDeath = GameManager.Instance.GetTimeToDeath();
         _killingPlayer = true;
     }
-
-    private IEnumerator JumpScare()
-    {
-        // move to jump-scare
-        var player = GameManager.Instance.player;
-        var offset = GameManager.Instance.scarePositionOffset;
-        transform.SetParent(player.transform);
-        transform.position = player.transform.position
-                             + player.transform.TransformDirection(offset);
-        
-        // wait
-        yield return new WaitForSeconds(GameManager.Instance.deathDuration);
-        GameManager.Instance.StartSwitchToDeathScene();
-    }
-    
     
     
     // --- events --- //
@@ -140,7 +125,7 @@ public class EnemyRoamController : EnemyBase
             if (_timeToDeath <= 0f)
             {
                 GameManager.Instance.isPlayerDead = true;
-                StartCoroutine(JumpScare());
+                StartCoroutine(GameManager.Instance.JumpScare());
             }
             return;
         }

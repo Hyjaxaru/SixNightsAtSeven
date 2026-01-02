@@ -7,6 +7,9 @@ public class NPFlashlightController : MonoBehaviour
     
     public bool IsOn => _flashlight.enabled;
 
+    public void Toggle() => _flashlight.enabled = !_flashlight.enabled;
+    public void Toggle(bool state) => _flashlight.enabled = state;
+
     void Start()
     {
         _flashlight = GetComponent<Light>();
@@ -15,6 +18,6 @@ public class NPFlashlightController : MonoBehaviour
     void OnFlash(InputValue _)
     {
         if (GameManager.Instance.isPlayerDead) return;
-        _flashlight.enabled = !_flashlight.enabled;
+        Toggle();
     }
 }
