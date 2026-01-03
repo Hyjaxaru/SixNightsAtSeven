@@ -25,6 +25,11 @@ public class GameManager : MonoBehaviour
     [Range(0, 10000)] public int nightPower;
     [Range(0, 10)] public float nightPowerInterval;
     [Range(0, 3)] public int nightIdleDrain;
+
+    [Space]
+    [Range(1, 3)] public int consumptionFlash = 1;
+    [Range(1, 3)] public int consumptionCamera = 1;
+    [Range(1, 3)] public int consumptionDoor = 1;
     
     // the animatronics
     [Header("Animatronics")]
@@ -57,6 +62,7 @@ public class GameManager : MonoBehaviour
     public bool IsOfficeDoorOpen => _doorController.DoorState;
     public int HourDisplay => _nightHourCount == 0 ? 12 : _nightHourCount;
     public int CurrentPowerUsage => CalculateCurrentPowerUsage();
+    public bool IsFlashOn => _flashlightController.IsOn;
 
     // --- functions --- //
     
@@ -102,17 +108,15 @@ public class GameManager : MonoBehaviour
         
         // flashlight drains 1
         if (_flashlightController.IsOn)
-            current++;
+            current += consumptionFlash;
         
         // cameras drain 1
         if (_cameraController.CameraState)
-            current++;
+            current += consumptionCamera;
         
         // doors drain power
         if (!_doorController.DoorState)
-            current++;
-        // if (!_doorController.VentState)
-        //     current++;
+            current += consumptionDoor;
         
         return current;
     }

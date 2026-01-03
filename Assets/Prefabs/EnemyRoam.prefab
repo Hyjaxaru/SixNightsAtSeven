@@ -124,8 +124,9 @@ MonoBehaviour:
   underglowColor: {r: 0.21960784, g: 0.21960784, b: 0.21960784, a: 0}
   waypoints: []
   moveChance: 0
-  moveBackwards: 0
   moveBackwardsChance: 0
+  killDelay: 0
+  goAwayDelay: 0
 --- !u!1 &7325592221306577859
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,7 +358,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2705597108152895507}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 11
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}

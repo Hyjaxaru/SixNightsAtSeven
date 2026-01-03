@@ -4,14 +4,9 @@ using UnityEngine.InputSystem;
 public class NPDoorController : MonoBehaviour
 {
     // --- public --- //
-
-    [Header("The Door")]
+    
     public OfficeDoorController doorController;
     public int doorActiveIndex;
-    
-    [Header("The Vent")]
-    public OfficeDoorController ventController; 
-    public int ventActiveIndex;
     
     
     // --- private --- //
@@ -22,10 +17,8 @@ public class NPDoorController : MonoBehaviour
     // --- computed --- //
     
     private bool IsFacingDoor => _movementController.officeIndex == doorActiveIndex;
-    private bool IsFacingVent => _movementController.officeIndex == ventActiveIndex;
 
     public bool DoorState => doorController.isOpen;
-    public bool VentState => ventController.isOpen;
     
     // --- events --- //
 
@@ -37,11 +30,8 @@ public class NPDoorController : MonoBehaviour
     void OnInteract(InputValue _)
     {
         if (GameManager.Instance.isPlayerDead) return;
+        if (!IsFacingDoor) return;
         
-        if (IsFacingDoor)
-            doorController.Toggle();
-        
-        if (IsFacingVent)
-            ventController.Toggle();
+        doorController.Toggle();
     }
 }

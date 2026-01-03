@@ -120,7 +120,12 @@ public class NPCameraController : MonoBehaviour
         var power = GameManager.Instance.nightPower;
         var usage = GameManager.Instance.CurrentPowerUsage;
         
-        var usageString = new string('█', usage);
+        var usageString = "";
+        for (var i = 0; i < usage; i++)
+        {
+            usageString += "█ ";
+        }
+
         var text = power / 10 + "%\nUsage: " + usageString;
         
         cameraPowerText.text = text;

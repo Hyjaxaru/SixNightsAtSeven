@@ -73,6 +73,10 @@ public class NPMovementController : MonoBehaviour
         if (GameManager.Instance.isPlayerDead) return;
         if (_cameraController.CameraState) return; // dont move if cams are open
         if (_animationLock) return;
+
+        if (GameManager.Instance.isPlayerDead
+            || _cameraController.CameraState
+            || _animationLock) return;
         
         var value = inputValue.Get<Vector2>();
         if (value == Vector2.zero) return;

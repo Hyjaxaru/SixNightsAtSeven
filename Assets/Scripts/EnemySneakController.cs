@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyRoamController : EnemyBase
+public class EnemySneakController : EnemyBase
 {
     // --- public --- //
 
@@ -35,7 +34,6 @@ public class EnemyRoamController : EnemyBase
     private float _timeAtDoorClosed;
     private float _timeToDeath;
     private bool _killingPlayer;
-    
     
     // --- computed --- //
     
@@ -132,10 +130,11 @@ public class EnemyRoamController : EnemyBase
         if (!IsAtDoor) return;
         
         // increment the correct timer
-        if (GameManager.Instance.IsOfficeDoorOpen)
-            _timeAtDoor += Time.deltaTime;
-        else
+        if (GameManager.Instance.IsFlashOn)
             _timeAtDoorClosed += Time.deltaTime;
+        else
+            _timeAtDoor += Time.deltaTime;
+            
             
         // decide what to do after waiting
         if (_timeAtDoor >= killDelay)
