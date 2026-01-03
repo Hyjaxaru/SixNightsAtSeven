@@ -11,7 +11,12 @@ public class OfficeDoorController : MonoBehaviour
     public Transform openTarget;
     public Transform closedTarget;
 
-    [Range(0, 1)] public float toggleDelay = 0.5f;
+    [Range(0, 2)] public float toggleDelay = 0.5f;
+    
+    // audio
+    [Space]
+    public AudioSource closeDoorSource;
+    public AudioSource openDoorSource;
     
     
     // --- private --- //
@@ -20,11 +25,18 @@ public class OfficeDoorController : MonoBehaviour
     
 
     // --- functions --- //
+
+    private void PlaySound()
+    {
+        if (isOpen)
+            openDoorSource.Play();
+        else
+            closeDoorSource.Play();
+    }
     
     private IEnumerator MoveDoor()
     {
         _animationLock = true;
-        
         
         // get the origin and target transforms for the player
         var originPosition = transform.position;
@@ -57,5 +69,6 @@ public class OfficeDoorController : MonoBehaviour
         
         isOpen = !isOpen;
         StartCoroutine(MoveDoor());
+        PlaySound();
     }
 }

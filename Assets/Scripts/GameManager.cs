@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     private NPDoorController _doorController;
     private NPFlashlightController _flashlightController;
     
+    private AudioSource _deathAudioSource;
+    
     
     // --- computed --- //
     
@@ -73,6 +75,7 @@ public class GameManager : MonoBehaviour
         // show
         jumpScareTextureMesh.enabled = true;
         _flashlightController.Toggle(true);
+        _deathAudioSource.Play();
         
         // wait
         yield return new WaitForSeconds(deathDuration);
@@ -146,6 +149,8 @@ public class GameManager : MonoBehaviour
         _cameraController = player.GetComponent<NPCameraController>();
         _doorController = player.GetComponent<NPDoorController>();
         _flashlightController = player.GetComponent<NPFlashlightController>();
+        
+        _deathAudioSource = GetComponent<AudioSource>();
     }
     
     void Update()
