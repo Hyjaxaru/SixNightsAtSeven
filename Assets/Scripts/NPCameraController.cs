@@ -135,6 +135,12 @@ public class NPCameraController : MonoBehaviour
         cameraPowerText.text = text;
         officePowerText.text = text;
     }
+
+    public void ToggleOfficeUI(bool state)
+    {
+        officePowerText.enabled = state;
+        officeTimeText.enabled = state;
+    }
     
     // --- events --- //
 

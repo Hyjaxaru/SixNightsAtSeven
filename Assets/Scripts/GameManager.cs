@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     
     // power controls
     [Space]
-    [Range(0, 10000)] public int nightPower;
+    [Range(0, 1000)] public int nightPower;
     [Range(0, 10)] public float nightPowerInterval;
     [Range(0, 3)] public int nightIdleDrain;
 
@@ -42,6 +42,10 @@ public class GameManager : MonoBehaviour
     [Range(1, 10)] public int deathMaxTime;
     [Range(1, 5)] public float deathDuration;
     public MeshRenderer jumpScareTextureMesh;
+    
+    // auido
+    [Header("Audio")]
+    public AudioSource ambienceAudioSource;
     
     
     // --- private --- //
@@ -127,6 +131,16 @@ public class GameManager : MonoBehaviour
 
     private void DrainPower() => nightPower -= CurrentPowerUsage;
 
+    private IEnumerator PowerZeroKillPlayer()
+    {
+        _flashlightController.Toggle(false);
+        ambienceAudioSource.mute = true;
+        _cameraController.ToggleOfficeUI(false);
+        
+        yield return new WaitForSeconds(GetTimeToDeath() * 2);
+        StartCoroutine(JumpScare());
+    }
+
     
     // --- events --- //
     
@@ -191,6 +205,13 @@ public class GameManager : MonoBehaviour
             {
                 StartSwitchToWinScene();
             }
+        }
+        
+        // handle 0 power
+        if (nightPower <= 0f)
+        {
+            isPlayerDead = true;
+            StartCoroutine(PowerZeroKillPlayer());
         }
     }
 }

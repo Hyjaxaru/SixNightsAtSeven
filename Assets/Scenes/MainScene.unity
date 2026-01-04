@@ -2260,6 +2260,7 @@ MonoBehaviour:
   deathMaxTime: 9
   deathDuration: 1
   jumpScareTextureMesh: {fileID: 1569695101}
+  ambienceAudioSource: {fileID: 162028733}
 --- !u!4 &319968589
 Transform:
   m_ObjectHideFlags: 0
