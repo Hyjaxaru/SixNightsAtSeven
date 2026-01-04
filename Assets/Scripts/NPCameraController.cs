@@ -43,7 +43,8 @@ public class NPCameraController : MonoBehaviour
     
     // audio
     [Header("Audio")]
-    public AudioSource _switchCameraAudioSource;
+    public AudioSource switchCameraAudioSource;
+    public AudioSource cameraToggleAudioSource;
     
     
     // --- private --- //
@@ -89,6 +90,9 @@ public class NPCameraController : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+        
+        // audio
+        if (newState) cameraToggleAudioSource.Play();
         
         CameraState = newState;
         _animationLock = false;
@@ -165,7 +169,11 @@ public class NPCameraController : MonoBehaviour
         StartCoroutine(AnimateCameraMonitor(!CameraState));
         
         // if the cameras are already on, we want to disable them before the animation
-        if (CameraState) CameraState = false;
+        if (CameraState)
+        {
+            CameraState = false;
+            cameraToggleAudioSource.Play();
+        }
 
         _flashlight.enabled = false;
     }
@@ -184,7 +192,7 @@ public class NPCameraController : MonoBehaviour
         
         SetCameraTransform(cameraTransforms[cameraIndex]);
         SetCameraIndexText();
-        _switchCameraAudioSource.pitch = Random.Range(0.9f, 1.1f);
-        _switchCameraAudioSource.Play();
+        switchCameraAudioSource.pitch = Random.Range(0.9f, 1.1f);
+        switchCameraAudioSource.Play();
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +14,8 @@ public class NPMovementController : MonoBehaviour
     
     // The speed that the player moves in the office
     [Range(0, 1)] public float moveDuration = 0.5f;
+    
+    public AudioSource _audioSource;
     
     
     // --- private --- //
@@ -41,6 +42,9 @@ public class NPMovementController : MonoBehaviour
         var targetPosition = cameraTransforms[officeIndex].position;
         var targetRotation = cameraTransforms[officeIndex].rotation;
         
+        // play sound
+        _audioSource.pitch = Random.Range(1.9f, 2.1f);
+        _audioSource.Play();
         
         // begin moving the camera
         var elapsed = 0.0f;
