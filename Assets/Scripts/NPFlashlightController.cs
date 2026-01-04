@@ -38,6 +38,9 @@ public class NPFlashlightController : MonoBehaviour
         if (GameManager.Instance.isPlayerDead) return;
         if (GameManager.Instance.CamerasVisible) return;
         Toggle();
+        
+        // audio
+        _audioSource.pitch = Random.Range(0.9f, 1.1f);
         _audioSource.Play();
     }
 }
