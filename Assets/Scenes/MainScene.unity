@@ -10837,6 +10837,7 @@ GameObject:
   - component: {fileID: 1887639344}
   - component: {fileID: 1887639351}
   - component: {fileID: 1887639345}
+  - component: {fileID: 1887639352}
   - component: {fileID: 1887639346}
   m_Layer: 0
   m_Name: NightPlayer
@@ -11081,6 +11082,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorController: {fileID: 997317925}
   doorActiveIndex: 0
+--- !u!114 &1887639352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887639340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 727bf0c1333bf4a2ba6f65ae830dfc1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Instance: {fileID: 0}
 --- !u!1 &1901833401
 GameObject:
   m_ObjectHideFlags: 0
