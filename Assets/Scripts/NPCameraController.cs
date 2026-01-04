@@ -31,7 +31,7 @@ public class NPCameraController : MonoBehaviour
     // the current index in the camera position transform list
     public int cameraIndex;
     
-    // the text in the camera ui that shows what camera is active
+    // ui
     [Header("UI")]
     public TextMeshPro cameraIndexText;
     [Space]
@@ -40,6 +40,10 @@ public class NPCameraController : MonoBehaviour
     [Space]
     public TextMeshPro cameraPowerText;
     public TextMeshPro officePowerText;
+    
+    // audio
+    [Header("Audio")]
+    public AudioSource _switchCameraAudioSource;
     
     
     // --- private --- //
@@ -174,5 +178,6 @@ public class NPCameraController : MonoBehaviour
         
         SetCameraTransform(cameraTransforms[cameraIndex]);
         SetCameraIndexText();
+        _switchCameraAudioSource.Play();
     }
 }

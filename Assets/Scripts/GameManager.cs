@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
     public int HourDisplay => _nightHourCount == 0 ? 12 : _nightHourCount;
     public int CurrentPowerUsage => CalculateCurrentPowerUsage();
     public bool IsFlashOn => _flashlightController.IsOn;
+    public bool CamerasVisible => _cameraController.CameraState;
 
     // --- functions --- //
     

@@ -132,10 +132,16 @@ public class EnemyRoamController : EnemyBase
         if (!IsAtDoor) return;
         
         // increment the correct timer
-        if (GameManager.Instance.IsOfficeDoorOpen)
-            _timeAtDoor += Time.deltaTime;
-        else
+        if (GameManager.Instance.IsFlashOn)
+        {
+            _timeAtDoor = 0;
             _timeAtDoorClosed += Time.deltaTime;
+        }
+        else
+        {
+            _timeAtDoor += Time.deltaTime;
+            _timeAtDoorClosed = 0;
+        }
             
         // decide what to do after waiting
         if (_timeAtDoor >= killDelay)
