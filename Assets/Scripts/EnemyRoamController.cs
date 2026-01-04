@@ -29,6 +29,7 @@ public class EnemyRoamController : EnemyBase
     
     private Rigidbody _rb;
     private NavMeshAgent _navMeshAgent;
+    private AudioSource _audioSource;
 
     private int _moveIndex;
     private float _timeAtDoor;
@@ -84,6 +85,9 @@ public class EnemyRoamController : EnemyBase
             ForceToIndex();
         else
             MoveToIndex();
+        
+        // audio
+        _audioSource.Play();
     }
 
     private void PushEnemyBack()
@@ -109,6 +113,7 @@ public class EnemyRoamController : EnemyBase
     {
         _rb = GetComponent<Rigidbody>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        _audioSource = GetComponent<AudioSource>();
         
         underglowLight.color = underglowColor;
     }
