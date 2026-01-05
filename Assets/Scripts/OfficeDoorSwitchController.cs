@@ -6,10 +6,10 @@ public class OfficeDoorSwitchController : MonoBehaviour
     // --- public --- //
     
     public GameObject handle;
+    public bool state;
+    [Space]
     [Range(-180, 180)] public float angleDisabled;
     [Range(-180, 180)] public float angleEnabled;
-    
-    public bool state;
     [Range(0, 2)] public float toggleDelay;
     
     
