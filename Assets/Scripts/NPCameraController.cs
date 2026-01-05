@@ -59,7 +59,7 @@ public class NPCameraController : MonoBehaviour
     public bool CameraState
     {
         get => _camSysCameraComp.enabled;
-        private set => _camSysCameraComp.enabled = value;
+        set => _camSysCameraComp.enabled = value;
     }
     
     
@@ -90,6 +90,25 @@ public class NPCameraController : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+        
+        // audio
+        if (newState) cameraToggleAudioSource.Play();
+        
+        CameraState = newState;
+        _animationLock = false;
+    }
+
+    public IEnumerator SnapCameraMonitor(bool newState)
+    {
+        _animationLock = true;
+        
+        // if the desired state is the same as the current, do nothing
+        if (newState == CameraState) yield break;
+        
+        // don't animate, just move
+        var transformTarget = newState ? transformEnabled : transformDisabled;
+        monitorObject.transform.position = transformTarget.position;
+        monitorObject.transform.rotation = transformTarget.rotation;
         
         // audio
         if (newState) cameraToggleAudioSource.Play();

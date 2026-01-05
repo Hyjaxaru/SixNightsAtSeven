@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
         jumpScareTextureMesh.enabled = true;
         _flashlightController.Toggle(true);
         _deathAudioSource.Play();
+        StartCoroutine(_cameraController.SnapCameraMonitor(false));
         
         // wait
         yield return new WaitForSeconds(deathDuration);
