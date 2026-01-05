@@ -42,15 +42,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ViewCameras",
-                    "type": "Button",
-                    "id": "5b9869f3-1138-422f-9ad3-197f8eb4f3bc",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "2b4b4bd3-9a2c-43c8-a82e-eb189e1043f8",
@@ -265,28 +256,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Flash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6dc76764-0db6-4c67-8d18-d7ba6852eb5d",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ViewCameras",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "320db6b3-2c9c-4cf3-9e08-1f7c1d23c5e5",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ViewCameras",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

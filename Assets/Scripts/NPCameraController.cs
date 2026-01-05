@@ -179,7 +179,7 @@ public class NPCameraController : MonoBehaviour
         SetPowerUsageText();
     }
     
-    void OnViewCameras(InputValue _)
+    void OnInteract(InputValue _)
     {
         if (GameManager.Instance.isPlayerDead) return;
         if (!camerasEnabled) return;

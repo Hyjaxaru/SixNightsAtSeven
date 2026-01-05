@@ -8,15 +8,20 @@ public class OfficeDoorController : MonoBehaviour
     
     public bool isOpen;
     
+    // targets
     public Transform openTarget;
     public Transform closedTarget;
-
+    
+    // delay
     [Range(0, 2)] public float toggleDelay = 0.5f;
     
     // audio
     [Space]
     public AudioSource closeDoorSource;
     public AudioSource openDoorSource;
+    
+    // switch
+    [Space] public OfficeDoorSwitchController switchController;
     
     
     // --- private --- //
@@ -32,6 +37,12 @@ public class OfficeDoorController : MonoBehaviour
             openDoorSource.Play();
         else
             closeDoorSource.Play();
+    }
+
+    private void AnimateSwitch()
+    {
+        if (switchController)
+            switchController.Toggle(isOpen);
     }
     
     private IEnumerator MoveDoor()
@@ -63,12 +74,15 @@ public class OfficeDoorController : MonoBehaviour
         _animationLock = false;
     }
 
-    public void Toggle()
+    public void Toggle() => Toggle(!isOpen);
+    
+    public void Toggle(bool newState)
     {
         if (_animationLock) return;
         
         isOpen = !isOpen;
         StartCoroutine(MoveDoor());
         PlaySound();
+        AnimateSwitch();
     }
 }
